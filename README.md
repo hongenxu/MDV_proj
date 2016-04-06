@@ -12,8 +12,11 @@ Most of these scripts were only used to generate commands, and we redirected tho
   * From:      http://bioinformatics.mdanderson.org/main/MuSE#Download
   * Parameter: MuSE call –O Output.Prefix –f Reference.Genome Tumor.bam Matched.Normal.bam & MuSE sump -I Output.Prefix.MuSE.txt -G –O Output.Prefix.vcf –D dbsnp.vcf.gz
   * Filtering: No
-  * Notes:        
+  * Notes:     dbSNP VCF (Galgal5 version) was used, and see dbSNP_liftover step for details.    
 2. MuTect
+  * Version:   MuTect-1.1.7, built from source
+  * From:      https://github.com/broadinstitute/mutect
+  * 
 3. MuTect2
 4. JointSNVMix2
 4. SomaticSniper
