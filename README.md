@@ -9,6 +9,7 @@ Most of these scripts were only used to generate commands, and we redirected tho
 * [Details](somatic_snv_indel/README.md)
 
 ##Identify somatic SVs
+* [Details](somatic_sv/README.md)
 
 ##Identify significantly mutated genes/regions
 
