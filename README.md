@@ -20,11 +20,25 @@ Most of these scripts were only used to generate commands, and we redirected tho
   * Filtering: No
   * Notes:     No
 3. MuTect2
-  * Version:   
+  * Version:   MuTect2 is inclued in GATK (version 3.5 and above), GATK version 3.5 was used
+  * From:      https://www.broadinstitute.org/gatk/download/
+  * Parameter: java -jar GenomeAnalysisTK.jar --analysis_type MuTect2  --reference_sequence genome --input_file:tumor tumor_bam --input_file:normal normal_bam --out  output_dir/sample.vcf
+  * Filtering: No
+  * Notes:     Not included in SomaticSeq.
 4. JointSNVMix2
-4. SomaticSniper
+5. SomaticSniper
+  * Version:   V1.0.5.0, from release
+  * From:      https://github.com/genome/somatic-sniper
+  * Parameter: bam-somaticsniper -q 1 -Q 20 -s 0.01 -F vcf -f reference_genome tumor_bam normal_bam out.vcf
+  * Filtering: Basic filtering scripts were provided, but filtering was not used in SomaticSeq, so I decided not to use the filtering.
+  * Notes:     No
 6. VarDict
 7. VarScan2
+  * Version:   VarScan.v2.4.1.jar
+  * From:      https://github.com/dkoboldt/varscan
+  * Parameter: step 1: samtools mpileup -f genome.fa -q 20 -B normal.bam tumor.bam >normal.tumor.fifo &; step 2: java -jar VarScan.v2.4.1.jar somatic normal.tumor.fifo --mpileup 1 --output-snp output.snp.vcf --output-indel  output.indel.vcf --output-vcf; 
+  * Filtering: 
+  * Notes:     See http://dkoboldt.github.io/varscan/ for usage. & see https://www.biostars.org/p/123430/ for "NOT RESETTING NORMAL error using Varscan2" 
 8. SomaticSeq
 
 ###Indels
