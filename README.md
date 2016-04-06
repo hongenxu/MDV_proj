@@ -8,6 +8,7 @@ Most of these scripts were only used to generate commands to sub (qsub) to our c
 ##Identify somatic SNVs and Indels
 ###SNVs
 * MuSE
+
 Version: MuSEv1.0rc_c039ffa
 
 * MuTect
