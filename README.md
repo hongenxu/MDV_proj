@@ -26,6 +26,9 @@ Most of these scripts were only used to generate commands, and we redirected tho
   * Filtering: No
   * Notes:     Not included in SomaticSeq analysis.
 4. JointSNVMix2
+  * Version:   No version information available
+  * From:      https://github.com/AstraZeneca-NGS/VarDict (original perl version of vardict) & https://github.com/AstraZeneca-NGS/VarDictJava (replacement java version, 10X fast)
+  * Parameter: 
 5. SomaticSniper
   * Version:   V1.0.5.0, from release
   * From:      https://github.com/genome/somatic-sniper
@@ -33,13 +36,17 @@ Most of these scripts were only used to generate commands, and we redirected tho
   * Filtering: Basic filtering scripts were provided, but filtering was not used in SomaticSeq, so I decided not to use the filtering.
   * Notes:     No
 6. VarDict
+  * Version:   No version information available
+  * From:      https://github.com/AstraZeneca-NGS/VarDict (original perl version of VarDict) & https://github.com/AstraZeneca-NGS/VarDictJava (replacement java version, 10X fast)
+  * Parameter: (1) VarDict -G genome -b "tumor_bam|normal_bam" -th 1 –F 0x500 –z -C -c 1 -S 2 -E 3 -g 4 5k_150bpOL_seg.bed  > out.vardict (same with SomaticSeq except “–th” ); (2) testsomatic.R; (3) var2vcf_paired.pl –f 0.01 was used since the author of VarDict recommended (see SomaticSeq manual)
+  * Filtering: steps 2 & 3 above can be seen as filtering
+  * Notes:     (1) https://github.com/AstraZeneca-NGS/VarDict/issues/2 explains why VarDict needs input bed files and Bed regions are recommended to have 150 bp overlap for WGS data to call indels; (2) to speed up, split 5k_150bpOL_seg.bed into several files
 7. VarScan2
   * Version:   VarScan.v2.4.1.jar
   * From:      https://github.com/dkoboldt/varscan
   * Parameter: step 1: samtools mpileup -f genome.fa -q 20 -B normal.bam tumor.bam >normal.tumor.fifo &; step 2: java -jar VarScan.v2.4.1.jar somatic normal.tumor.fifo --mpileup 1 --output-snp output.snp.vcf --output-indel  output.indel.vcf --output-vcf; 
   * Filtering: java -jar VarScan.v2.4.1.jar processSomatic output.indel.vcf & java -jar VarScan.v2.4.1.jar processSomatic outputsnp.vcf
   * Notes:     (1) See http://dkoboldt.github.io/varscan/ for usage. (2) see https://www.biostars.org/p/123430/ for "NOT RESETTING NORMAL error using Varscan2" (3) Call varScan using named pipes (fifos) instead of anonymous pipe See https://gist.github.com/seandavi/1022747 for details. Also used in SomaticSeq “Run_5_callers”. 
-
 8. SomaticSeq
 
 ###Indels
