@@ -5,13 +5,14 @@ Scripts used in MDV project.
 
 ##Identify somatic SNVs and Indels
 ###SNVs
-1. MuSE
-2. MuTect2
-3. JointSNVMix2
-4. SomaticSniper
-5. VarDict
-6. VarScan2
-7. SomaticSeq
+* MuSE
+* MuTect
+* MuTect2
+* JointSNVMix2
+* SomaticSniper
+* VarDict
+* VarScan2
+* SomaticSeq
 ###Indels
 
 ##Identify somatic SVs
