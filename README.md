@@ -1,12 +1,11 @@
 # MDV_proj
 Scripts used in MDV project. 
 
-##Step 1:
-Identify somatic SNVs and Indels
+##Fastq2bam pipeline
 
-##Step 2:
-Identify somatic SVs
+##Identify somatic SNVs and Indels
 
-##Step 3:
-Identify significantly mutated genes/regions
+##Identify somatic SVs
+
+##Identify significantly mutated genes/regions
 
