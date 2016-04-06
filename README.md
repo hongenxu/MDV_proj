@@ -8,9 +8,9 @@ Most of these scripts were only used to generate commands to sub (qsub) to our c
 ##Identify somatic SNVs and Indels
 ###SNVs
 1. MuSE
-
   * Version: MuSEv1.0rc_c039ffa
-  * From:    
+  * From:    http://bioinformatics.mdanderson.org/main/MuSE#Download
+  * notes:      
 2. MuTect
 3. MuTect2
 4. JointSNVMix2
