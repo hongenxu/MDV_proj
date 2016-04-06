@@ -1,6 +1,7 @@
 #/usr/bin/perl
-
+#require the config.txt file, we keep a copy in the current directory 
 #usage:perl fastq2bam.pl --sample sample_id
+#we direct the ouputput of this script to a file and then 'qsub' the file to the cluster
 
 use strict;
 use warnings;
@@ -10,13 +11,13 @@ use List::MoreUtils qw(uniq);
 
 ###parameter and usage  
 my $sample="";
-my $usage="Usage: perl fastq2bam.pl --sample sample_id\nSee the first column of config.txt for possible sample_id value.\n";
+my $usage="Usage: perl fastq2bam.pl --sample sample_id\nSee the first column of config.txt for possible sample_id value (i.e.,002683_Line-6).\n";
 GetOptions(
             "sample=s"   => \$sample);
 die $usage if $sample eq "";
 
-###software configuration 
-my $input_dir="/home/proj/MDW_genomics/MSU_HPCC_Research/DNA_Seq/Fastq_All_Samples/";
+###input and output directory configuration 
+my $input_dir="/home/proj/MDW_genomics/MSU_HPCC_Research/DNA_Seq/Fastq_All_Samples/";##fastq files
 my $output_dir="/scratch/xu/MDV_project/fastq2bam";
 my $trimm_output="$output_dir/trimm/";
 mkdir $trimm_output if ! -d $trimm_output;
@@ -24,22 +25,18 @@ my $sickle_output="$output_dir/sickle/";
 mkdir $sickle_output if ! -d $sickle_output;
 my $fastqc_output="$output_dir/fastqc/";
 mkdir $fastqc_output if ! -d $fastqc_output;
-my $bowtie2_output="$output_dir/bowtie2/";
-mkdir $bowtie2_output if ! -d $bowtie2_output;
 my $bwa_output="$output_dir/bwa/";
 mkdir $bwa_output if ! -d $bwa_output;
 my $post_output="$output_dir/post_alignment/";
 mkdir $post_output if ! -d $post_output;
-my $merged_output="$output_dir/merged/";
+my $merged_output="$output_dir/merged/";##final bam comes here 
 mkdir $merged_output if ! -d $merged_output;
 
-
-my $sample_cfg="/home/proj/MDW_genomics/xu/config.txt";
+##apps and requring files 
+my $sample_cfg="/scratch/xu/MDV_project/fastq2bam/config.txt";
 my $trimmomatic="/home/users/xu/Trimmomatic-0.35";
 my $sickle="/home/users/xu/sickle-1.33/sickle";
 my $fastqc="/home/users/xu/FastQC/fastqc";
-my $bowtie2="/home/users/xu/bowtie2-2.2.3/bowtie2";
-my $bow_ref="/home/proj/MDW_genomics/20150220_Steep_iGenome/Sequence/Bowtie2Index/genome";
 my $bwa="/home/users/xu/bwa/bwa";
 my $bwa_ref="/home/users/xu/bwa/galgal5.fa";
 my $picard="/home/users/xu/picard-tools-1.141/picard.jar";
@@ -47,8 +44,7 @@ my $gatk="/home/users/xu/gatk-3.5";
 my $GalGal5_Ref="/home/users/xu/bwa/galgal5.fa";
 
 
-###
-
+###read config.txt file 
 open CFG, "$sample_cfg" or die "Cannot find the sample configure file!\n";
 my @barcodes;
 my @lanes;
@@ -58,7 +54,7 @@ my $sample_label="";
 my $sample_type="";
 while (<CFG>){
 	chomp;
-	next if $_=~/^#/;
+	next if $_=~/^#/;#ignore comment line
 	my ($id,$barcode,$lane,$read,$suffix,$label,$type)=split/\t/,$_;
 	if ($id eq $sample ){
 		push @barcodes,$barcode;
@@ -96,9 +92,6 @@ else {
 		
 }
 
-print "Sample:","$sample\t","NewSample:","$new_sample\n";
-
-
 my $merge_sam_input="";###used in the last step 
 
 foreach my $lane (@lanes){
@@ -110,17 +103,15 @@ foreach my $lane (@lanes){
 	if (! -e $tri_in_R1 or ! -e $tri_in_R2 ){
 		die "$tri_in_R1"," or ","$tri_in_R2", " not exists!\n";
 	}
-
 	$lane=~s/00//g; ###change from "L001" to "L1"
 	
 	my $tri_out_R1_paired=join("",$trimm_output,$new_sample,"_",$lane,"_","R1","_","paired_Trimmomatic.fastq.gz");
 	my $tri_out_R2_paired=join("",$trimm_output,$new_sample,"_",$lane,"_","R2","_","paired_Trimmomatic.fastq.gz");
 	my $tri_out_R1_unpaired=join("",$trimm_output,$new_sample,"_",$lane,"_","R1","_","unpaired_Trimmomatic.fastq.gz");
 	my $tri_out_R2_unpaired=join("",$trimm_output,$new_sample,"_",$lane,"_","R2","_","unpaired_Trimmomatic.fastq.gz");
-	#my $trim_log=join("",$trimm_output,$new_sample,"_",$lane,".trimlog");
+
 	my $cmd1="java -jar $trimmomatic/trimmomatic-0.35.jar PE -threads 4 $tri_in_R1 $tri_in_R2 $tri_out_R1_paired $tri_out_R1_unpaired $tri_out_R2_paired $tri_out_R2_unpaired ILLUMINACLIP:$trimmomatic/adapters/TruSeq2-PE.fa:2:30:10 HEADCROP:9";
-	#print "trimming using Trimmomatic\n","$cmd1\n";
-	#`qsub -b y -l vf=16G,core=4 -q thor-10g.q -N 'trm_$sample_label.$lane' "$cmd1"`;		
+	print "$cmd1\n";		
 
 	#####################read trimming using sickle	##########################################
 	my $sic_R1_paired=$tri_out_R1_paired;
@@ -132,11 +123,10 @@ foreach my $lane (@lanes){
 	my $sic_out_singles_PE=join("","$sickle_output",$new_sample,"_",$lane,"_","Singles_PE_Sickle.fastq.gz");
 	my $sic_out_singles_SE=join("","$sickle_output",$new_sample,"_",$lane,"_","Singles_SE_Sickle.fastq.gz");
 	my $cmd2="$sickle pe -f $sic_R1_paired -r $sic_R2_paired -t sanger -o $sic_out_R1 -p $sic_out_R2 -s $sic_out_singles_PE -q 20 -l 50 -g";
-	#print "trimming using sickle-pair end mode\n","$cmd2\n";
-	#`qsub -b y -l vf=4G,core=1 -q thor-10g.q -N "spe_$sample_label.$lane" -hold_jid 'trm_$sample_label.L*'  "$cmd2"`;
 	my $cmd3="$sickle se -f $sic_R1_unpaired -t sanger -o $sic_out_singles_SE -q 30 -l 50 -g";
-	#print "trimming using sickle-single end mode\n","$cmd3\n";
-	#`qsub -b y -l vf=4G,core=1 -q thor-10g.q -N "sse_$sample_label.$lane" -hold_jid 'trm_$sample_label.L*'  "$cmd3"`;
+
+	print "$cmd2\n";
+	print "$cmd3\n";
 
 	##########################fastqc post sickle trimming###################################
 	my $fas_in_R1=$sic_out_R1;
@@ -144,19 +134,15 @@ foreach my $lane (@lanes){
 	my $fas_in_singles_PE=$sic_out_singles_PE;
 	my $fas_in_singles_SE=$sic_out_singles_SE;
 	my $cmd4="$fastqc -o $fastqc_output $fas_in_R1 $fas_in_R2 $fas_in_singles_PE $fas_in_singles_SE";
-	#print "fastqc post trimming\n","$cmd4\n";
-	#`qsub -b y -l vf=4G,core=1 -q thor-10g.q -N "fqc_$sample_label.$lane" -hold_jid 'spe_$sample_label.L*',"sse_$sample_label.$lane"  "$cmd4"`;
-
+	print "$cmd4\n";
 
 	#########################read aligner bwa #####################################################
-	my $bow_in_R1=$sic_out_R1;
-	my $bow_in_R2=$sic_out_R2;
-	my $bow_in_singles_PE=$sic_out_singles_PE;
-	my $bow_in_singles_SE=$sic_out_singles_SE;##will not be used due to failure to pass fastqc
-	#my $bow_out_sam=join("",$bowtie2_output,$new_sample,"_",$lane,"_","Bowtie2_NRG_Yet.sam");
-	#my $cmd5="$bowtie2 -p 9 -x $bow_ref -1 $bow_in_R1 -2 $bow_in_R2 -U $bow_in_singles_PE -S $bow_out_sam -X 1000 --local";
+	my $bwa_in_R1=$sic_out_R1;
+	my $bwa_in_R2=$sic_out_R2;
+	my $bwa_in_singles_PE=$sic_out_singles_PE;
+	my $bwa_in_singles_SE=$sic_out_singles_SE;##will not be used due to failure to pass fastqc
 	my $bwa_out_sam=join("",$bwa_output,$new_sample,"_",$lane,"_","Bwa_NRG_Yet.sam");
-	my $cmd5="$bwa mem -t 11 -T 20 $bwa_ref $bow_in_R1 $bow_in_R2 >$bwa_out_sam";
+	my $cmd5="$bwa mem -t 11 -T 20 $bwa_ref $bwa_in_R1 $bwa_in_R2 >$bwa_out_sam";
 	
 	print "$cmd5\n";
 	
@@ -174,7 +160,6 @@ foreach my $lane (@lanes){
 	my $RGSM=$new_sample;
 	my $RGLB=$sample_type;
 	my $cmd6="java -Xmx40g -jar $picard AddOrReplaceReadGroups INPUT=$pic_in_sam OUTPUT=$pic_out_sam RGID=$RGID RGPL=$RGPL RGPU=$RGPU RGSM=$RGSM RGLB=$RGLB";
-	
 	print "$cmd6\n";
 
 	
@@ -234,3 +219,4 @@ print "\n";
 print "java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $GalGal5_Ref -I $marked_merged_bam -targetIntervals $Intervals_across_lanes -o $Dedupped_realigned_merged_BAM";
 print "\n";
 print "java -Xmx40g -jar $picard BuildBamIndex  INPUT=$Dedupped_realigned_merged_BAM OUTPUT=$Dedupped_realigned_merged_BAM_index";
+print "\n";

@@ -64,8 +64,9 @@ foreach my $num (1..51){
 	my $sample=join("","S",$num);
 	foreach my $key (keys %hash){
 		if ($hash{$key}	eq "$sample"){	
-			print qq(qsub -b y -l vf=48G,core=1 -q all.q -N "$sample" "perl fastq2bam.pl --sample $key");
-			print "\n";
+			system "perl fastq2bam.pl --sample $key >$sample.sub"; #direct the output to a file 
+			print qq(qsub -b y -l vf=48G,core=1 -q all.q -N "$sample" "sh $sample.sub"\n);
+			
 		}
 
 	}	
