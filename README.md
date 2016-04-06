@@ -26,9 +26,12 @@ Most of these scripts were only used to generate commands, and we redirected tho
   * Filtering: No
   * Notes:     Not included in SomaticSeq analysis.
 4. JointSNVMix2
-  * Version:   No version information available
-  * From:      https://github.com/AstraZeneca-NGS/VarDict (original perl version of vardict) & https://github.com/AstraZeneca-NGS/VarDictJava (replacement java version, 10X fast)
-  * Parameter: 
+  * Version:   Version 0.7.5
+  * From:      https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/joint-snv-mix/JointSNVMix-0.7.5.tar.gz
+  * Parameter: (1) jsm.py train joint_snv_mix_two --min_normal_depth 8 --min_tumour_depth 6 genome.fa normal.bam tumor.bam config/joint_priors.cfg config/joint_params.cfg sample.cfg; (2) jsm.py classify joint_snv_mix_two genome.fa normal.bam tumor.bam sample.cfg sample.tsv
+  * Filtering: awk -F "\t" 'NR!=1 && $4!="N" && $10+$11>=0.95' sample.tsv >sample.filtered.tsv
+  * Notes:     For sample S5, I repeatedly got the error messages “Exception: Lower bound decreased exiting”. Based on the recommendations here (https://code.google.com/archive/p/joint-snv-mix/issues/8), I set the --convergence_threshold flag when training to a value above the default of 0.000001 to 0.01 for sample S5. 
+
 5. SomaticSniper
   * Version:   V1.0.5.0, from release
   * From:      https://github.com/genome/somatic-sniper
@@ -38,7 +41,7 @@ Most of these scripts were only used to generate commands, and we redirected tho
 6. VarDict
   * Version:   No version information available
   * From:      https://github.com/AstraZeneca-NGS/VarDict (original perl version of VarDict) & https://github.com/AstraZeneca-NGS/VarDictJava (replacement java version, 10X fast)
-  * Parameter: (1) VarDict -G genome -b "tumor_bam|normal_bam" -th 1 –F 0x500 –z -C -c 1 -S 2 -E 3 -g 4 5k_150bpOL_seg.bed  > out.vardict (same with SomaticSeq except “–th” ); (2) testsomatic.R; (3) var2vcf_paired.pl –f 0.01 was used since the author of VarDict recommended (see SomaticSeq manual)
+  * Parameter: (1) VarDict -G genome -b "tumor_bam|normal_bam" -th 1 –F 0x500 –z -C -c 1 -S 2 -E 3 -g 4 5k_150bpOL_seg.bed  > out.vardict (same with SomaticSeq except “–h”, which means to print a header row decribing columns ); (2) testsomatic.R; (3) var2vcf_paired.pl –f 0.01 was used since the author of VarDict recommended (see SomaticSeq manual)
   * Filtering: steps 2 & 3 above can be seen as filtering
   * Notes:     (1) https://github.com/AstraZeneca-NGS/VarDict/issues/2 explains why VarDict needs input bed files and Bed regions are recommended to have 150 bp overlap for WGS data to call indels; (2) to speed up, split 5k_150bpOL_seg.bed into several files
 7. VarScan2
