@@ -1,11 +1,4 @@
-# MDV project
-Scripts used in MDV project. 
 
-Most of these scripts were only used to generate commands, and we redirected those commands to a file and submitted (qsub) the file to our computer cluster.
-
-##Fastq2bam pipeline
-
-##Identify somatic SNVs and Indels
 ###SNVs
 1. MuSE
   * Version:   MuSEv1.0rc_c039ffa
@@ -56,8 +49,4 @@ Most of these scripts were only used to generate commands, and we redirected tho
 * Indelocator
 * VarDict
 * VarScan2
-
-##Identify somatic SVs
-
-##Identify significantly mutated genes/regions
 
