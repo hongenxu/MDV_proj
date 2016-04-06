@@ -7,17 +7,17 @@ Most of these scripts were only used to generate commands to sub (qsub) to our c
 
 ##Identify somatic SNVs and Indels
 ###SNVs
-* MuSE
+1. MuSE
 
-Version: MuSEv1.0rc_c039ffa
-
-* MuTect
-* MuTect2
-* JointSNVMix2
-* SomaticSniper
-* VarDict
-* VarScan2
-* SomaticSeq
+  * Version: MuSEv1.0rc_c039ffa
+  * From:    
+2. MuTect
+3. MuTect2
+4. JointSNVMix2
+4. SomaticSniper
+6. VarDict
+7. VarScan2
+8. SomaticSeq
 
 ###Indels
 * MuTect2
