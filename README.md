@@ -1,2 +1,2 @@
 # MDV_proj
-scripts used in MDV project 
+Scripts used in MDV project. 
