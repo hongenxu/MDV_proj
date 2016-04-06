@@ -10,7 +10,7 @@ Most of these scripts were only used to generate commands, and we redirected tho
 1. MuSE
   * Version:   MuSEv1.0rc_c039ffa
   * From:      http://bioinformatics.mdanderson.org/main/MuSE#Download
-  * Parameter: MuSE call –O Output.Prefix –f Reference.Genome Tumor.bam Matched.Normal.bam & MuSE sump -I Output.Prefix.MuSE.txt -G –O Output.Prefix.vcf –D dbsnp.vcf.gz
+  * Parameter: (1) MuSE call –O Output.Prefix –f Reference.Genome Tumor.bam Matched.Normal.bam (2) MuSE sump -I Output.Prefix.MuSE.txt -G –O Output.Prefix.vcf –D dbsnp.vcf.gz
   * Filtering: No
   * Notes:     dbSNP VCF (Galgal5 version) was used, and see dbSNP_liftover step for details.    
 2. MuTect
@@ -24,7 +24,7 @@ Most of these scripts were only used to generate commands, and we redirected tho
   * From:      https://www.broadinstitute.org/gatk/download/
   * Parameter: java -jar GenomeAnalysisTK.jar --analysis_type MuTect2  --reference_sequence genome --input_file:tumor tumor_bam --input_file:normal normal_bam --out  output_dir/sample.vcf
   * Filtering: No
-  * Notes:     Not included in SomaticSeq.
+  * Notes:     Not included in SomaticSeq analysis.
 4. JointSNVMix2
 5. SomaticSniper
   * Version:   V1.0.5.0, from release
@@ -37,8 +37,9 @@ Most of these scripts were only used to generate commands, and we redirected tho
   * Version:   VarScan.v2.4.1.jar
   * From:      https://github.com/dkoboldt/varscan
   * Parameter: step 1: samtools mpileup -f genome.fa -q 20 -B normal.bam tumor.bam >normal.tumor.fifo &; step 2: java -jar VarScan.v2.4.1.jar somatic normal.tumor.fifo --mpileup 1 --output-snp output.snp.vcf --output-indel  output.indel.vcf --output-vcf; 
-  * Filtering: 
-  * Notes:     See http://dkoboldt.github.io/varscan/ for usage. & see https://www.biostars.org/p/123430/ for "NOT RESETTING NORMAL error using Varscan2" 
+  * Filtering: java -jar VarScan.v2.4.1.jar processSomatic output.indel.vcf & java -jar VarScan.v2.4.1.jar processSomatic outputsnp.vcf
+  * Notes:     (1) See http://dkoboldt.github.io/varscan/ for usage. (2) see https://www.biostars.org/p/123430/ for "NOT RESETTING NORMAL error using Varscan2" (3) Call varScan using named pipes (fifos) instead of anonymous pipe See https://gist.github.com/seandavi/1022747 for details. Also used in SomaticSeq “Run_5_callers”. 
+
 8. SomaticSeq
 
 ###Indels
