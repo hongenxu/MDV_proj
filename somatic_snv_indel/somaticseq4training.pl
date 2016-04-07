@@ -54,7 +54,7 @@ my $jsm_dir="$main_in_dir/jsm_results";
 my $somaticsniper_dir="$main_in_dir/somaticsniper_results";
 my $vardict_dir="$main_in_dir/vardict_results";
 my $muse_dir="$main_in_dir/muse_results";
-my $mutect2_dir="$main_in_dir/mutect2_results";
+#my $mutect2_dir="$main_in_dir/mutect2_results";#deprecated
 my $indelocator_dir="$main_in_dir/indelocator_results";
 ####output directory 
 my $output_dir="/scratch/xu/MDV_project/bamsurgeon_results/somaticseq";
@@ -106,16 +106,19 @@ print "\n";
 print "$python $somaticseq/modify_VJSD.py -method MuSE -infile $muse_dir/$sample.vcf -outfile $output_dir/$sample.muse.snp.vcf\n";
 print "\n";
 
-#################indelocator################################
+#################mutect2################################
 ##use mutect2 results instead of indelocator 
 ##extract header lines
 #extract indels, adding CGA tag, extract "PASS" (means somatic)
+#mutect2 was deprecated
+#for unknown reasons, the output VCF files of the following commands cannot be correctly processed by python scripts in SomaticSeq
 
-print "grep \"#\" $mutect2_dir/$sample.vcf > $output_dir/$sample.mutect2.indel.vcf\n";
-print qq(sed -i '36i##INFO=<ID=CGA,Number=0,Type=Flag,Description="CGA called somatic event">' $output_dir/$sample.mutect2.indel.vcf\n);
-print qq(awk 'length(\$4)>1 \|\|length(\$5)>1 {print \$1"\\t"\$2"\\t"\$3"\\t"\$4"\\t"\$5"\\t"\$6"\\t"\$7"\\t"\$8"\;CGA""\\t"\$9"\\t"\$10"\\t"\$11}' $mutect2_dir/$sample.vcf |grep "PASS" - >> $output_dir/$sample.mutect2.indel.vcf\n);
-print "\n";
+#print "grep \"#\" $mutect2_dir/$sample.vcf > $output_dir/$sample.mutect2.indel.vcf\n";
+#print qq(sed -i '36i##INFO=<ID=CGA,Number=0,Type=Flag,Description="CGA called somatic event">' $output_dir/$sample.mutect2.indel.vcf\n);
+#print qq(awk 'length(\$4)>1 \|\|length(\$5)>1 {print \$1"\\t"\$2"\\t"\$3"\\t"\$4"\\t"\$5"\\t"\$6"\\t"\$7"\\t"\$8"\;CGA""\\t"\$9"\\t"\$10"\\t"\$11}' $mutect2_dir/$sample.vcf |grep "PASS" - >> $output_dir/$sample.mutect2.indel.vcf\n);
+#print "\n";
 
+####################indelocator############### 
 print "$python $somaticseq/modify_MuTect.py -type indel  -infile $indelocator_dir/$sample.vcf -outfile $output_dir/$sample.indelocator.indel.vcf -nbam $normal_bam -tbam  $tumor_bam -samtools $samtools \n";
 
 ################combine SNV callers results################
@@ -135,7 +138,7 @@ print "\n";
 
 
 ################combine INDEL callers results ######
-my @indel_callers=("mutect2","varscan2","vardict");
+my @indel_callers=("indelocator","varscan2","vardict");
 foreach my $indel_caller (@indel_callers){
      if (! -e "$output_dir/$sample.$indel_caller.indel.vcf"){
          #die "$output_dir/$sample.$indel_caller.indel.vcf not found\n";
@@ -146,7 +149,7 @@ foreach my $indel_caller (@indel_callers){
  }
 
 
-print "java -jar $gatk -T CombineVariants -R $genome --setKey null --genotypemergeoption UNSORTED -V $output_dir/$sample.mutect2.indel.vcf -V $output_dir/$sample.varscan2.indel.vcf  -V $output_dir/$sample.vardict.indel.vcf --out $output_dir/$sample.combined.indel.vcf\n";
+print "java -jar $gatk -T CombineVariants -R $genome --setKey null --genotypemergeoption UNSORTED -V $output_dir/$sample.indelocator.indel.vcf -V $output_dir/$sample.varscan2.indel.vcf  -V $output_dir/$sample.vardict.indel.vcf --out $output_dir/$sample.combined.indel.vcf\n";
 print "\n";
 
 
@@ -166,11 +169,12 @@ print "\n";
  
 
 #####################Convert the VCF file and annotate ##########
+
 print "$python $somaticseq/SSeq_merged.vcf2tsv.py -ref $genome -myvcf $output_dir/$sample.bina.somatic.snp.vcf -truth $snp_truth -mutect $mutect_dir/$sample.filtered.vcf  -varscan $varscan2_dir/$sample.snp.Somatic.hc.vcf  -jsm $output_dir/$sample.jsm.tmp.vcf  -sniper $somaticsniper_dir/$sample.vcf  -vardict $output_dir/$sample.vardict.snp.vcf -muse $muse_dir/$sample.vcf  -tbam $tumor_bam -nbam $normal_bam -outfile $output_dir/$sample.ensemble.snp.tsv\n"; 
 
 print "R --no-save --args $output_dir/$sample.ensemble.snp.tsv <$somaticseq/r_scripts/ada_model_builder.R \n";
 
-print "$python $somaticseq/SSeq_merged.vcf2tsv.py -ref $genome -myvcf $output_dir/$sample.bina.somatic.indel.vcf -truth  $indel_truth -mutect $output_dir/$sample.mutect2.indel.vcf  -varscan $varscan2_dir/$sample.indel.Somatic.hc.vcf -vardict $output_dir/$sample.vardict.indel.vcf -tbam $tumor_bam -nbam $normal_bam -outfile $output_dir/$sample.ensemble.indel.tsv\n";
+print "$python $somaticseq/SSeq_merged.vcf2tsv.py -ref $genome -myvcf $output_dir/$sample.bina.somatic.indel.vcf -truth  $indel_truth -mutect $indelocator_dir/$sample.vcf  -varscan $varscan2_dir/$sample.indel.Somatic.hc.vcf -vardict $output_dir/$sample.vardict.indel.vcf -tbam $tumor_bam -nbam $normal_bam -outfile $output_dir/$sample.ensemble.indel.tsv\n";
 
 
 print "R --no-save --args $output_dir/$sample.ensemble.indel.tsv <$somaticseq/r_scripts/ada_model_builder.R \n";
