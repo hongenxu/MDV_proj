@@ -55,6 +55,7 @@ my $somaticsniper_dir="$main_in_dir/somaticsniper_results";
 my $vardict_dir="$main_in_dir/vardict_results";
 my $muse_dir="$main_in_dir/muse_results";
 my $mutect2_dir="$main_in_dir/mutect2_results";
+my $indelocator_dir="$main_in_dir/indelocator_results";
 ####output directory 
 my $output_dir="/scratch/xu/MDV_project/bamsurgeon_results/somaticseq";
 mkdir $output_dir if ! -d $output_dir;
@@ -114,6 +115,8 @@ print "grep \"#\" $mutect2_dir/$sample.vcf > $output_dir/$sample.mutect2.indel.v
 print qq(sed -i '36i##INFO=<ID=CGA,Number=0,Type=Flag,Description="CGA called somatic event">' $output_dir/$sample.mutect2.indel.vcf\n);
 print qq(awk 'length(\$4)>1 \|\|length(\$5)>1 {print \$1"\\t"\$2"\\t"\$3"\\t"\$4"\\t"\$5"\\t"\$6"\\t"\$7"\\t"\$8"\;CGA""\\t"\$9"\\t"\$10"\\t"\$11}' $mutect2_dir/$sample.vcf |grep "PASS" - >> $output_dir/$sample.mutect2.indel.vcf\n);
 print "\n";
+
+print "$python $somaticseq/modify_MuTect.py -type indel  -infile $indelocator_dir/$sample.vcf -outfile $output_dir/$sample.indelocator.indel.vcf -nbam $normal_bam -tbam  $tumor_bam -samtools $samtools \n";
 
 ################combine SNV callers results################
 my @snp_callers=("mutect","varscan2","jsm","somaticsniper","vardict","muse");
