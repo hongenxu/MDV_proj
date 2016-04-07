@@ -70,7 +70,7 @@
  samtools mpileup -f genome.fa -q 20 -B normal.bam tumor.bam >normal.tumor.fifo & 
  ```
  ```
- java -jar VarScan.jar somatic normal.tumor.fifo --mpileup 1 --output-snp output.snp.vcf --output-indel output.indel.vcf --output-vcf  ```
+ java -jar VarScan.jar somatic normal.tumor.fifo --mpileup 1 --output-vcf --output-snp output.snp.vcf --output-indel output.indel.vcf  ```
   * Filtering: 
  ```
  java -jar VarScan.v2.4.1.jar processSomatic output.indel.vcf 
