@@ -7,14 +7,17 @@ Most of these scripts were only used to generate commands, and we redirected tho
 
 ##Requiring files
 
-###Galgal5
+####Galgal5
 We used chicken reference genome Galgal5. 
 
-###dbSNP_liftover
+####dbSNP_liftover
 The chicken dbSNP file was based on genome version Galgal4. So we need first liftover galgal4 coordinates to galgal5 ones. 
 
 Since UCSC does not have Galgal4 to Galgal5 chain file, we created own chain file following the guide at https://github.com/wurmlab/flo
 
+####SnpEff
+
+####Variant Effect Predictor
 
 ##Fastq2bam pipeline
 Scripts were uesd to process original FASTQ files to final BAM files. The pipeline was designed following GATK best practice.
