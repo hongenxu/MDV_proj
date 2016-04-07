@@ -34,8 +34,6 @@
   * Usage: 
  ```
     jsm.py train joint_snv_mix_two --min_normal_depth 8 --min_tumour_depth 6 genome.fa normal.bam tumor.bam config/joint_priors.cfg config/joint_params.cfg sample.cfg
- ```
- ```
      jsm.py classify joint_snv_mix_two genome.fa normal.bam tumor.bam sample.cfg sample.tsv
  ```
   * Filtering: 
@@ -68,8 +66,6 @@
   * Usage: 
  ```
      samtools mpileup -f genome.fa -q 20 -B normal.bam tumor.bam >normal.tumor.fifo
- ```
- ```
      java -jar VarScan.jar somatic normal.tumor.fifo --mpileup 1 --output-vcf --output-snp output.snp.vcf --output-indel output.indel.vcf
  ```
   * Filtering:
