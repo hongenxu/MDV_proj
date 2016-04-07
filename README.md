@@ -8,10 +8,12 @@ Most of these scripts were only used to generate commands, and we redirected tho
 ##Requiring files
 
 ###Galgal5
-We used chicken reference genome (Galgal5). 
+We used chicken reference genome Galgal5. 
 
 ###dbSNP_liftover
-The chicken dbSNP file was based on genome version Galgal4. 
+The chicken dbSNP file was based on genome version Galgal4. So we need first liftover galgal4 coordinates to galgal5 ones. 
+
+
 
 ##Fastq2bam pipeline
 Scripts were uesd to process original FASTQ files to final BAM files. The pipeline was designed following GATK best practice.
