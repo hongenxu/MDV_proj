@@ -1,4 +1,6 @@
 
+##Study design
+![alt text](https://github.com/hongenxu/MDV_proj/blob/master/others/snv_indel_pipeline.jpg "SNV Indel pipeline")
 ###SNVs
 1. MuSE
   * Version:   MuSEv1.0rc_c039ffa
