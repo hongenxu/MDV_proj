@@ -53,7 +53,7 @@
   * Filtering: Basic filtering scripts were provided, but filtering was not used in SomaticSeq, so I decided not to use the filtering.
   * Notes:     No
 6. VarDict
-  * Version:   No version information available
+  * Version:   VarDict-1.4.4
   * From:      https://github.com/AstraZeneca-NGS/VarDict (original perl version of VarDict) & https://github.com/AstraZeneca-NGS/VarDictJava (replacement java version, 10X fast)
   * Usage:
  ```
