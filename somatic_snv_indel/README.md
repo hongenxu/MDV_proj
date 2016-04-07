@@ -78,7 +78,8 @@
 
 ###Indels
 1.  MuTect2
-  See SNVs section for details, and not used in SomaticSeq analysis.
+  
+ See SNVs section for details, and not used in SomaticSeq analysis.
 2.  Indelocator
   * Version: IndelGenotyper.36.3336
   * From:    https://www.broadinstitute.org/cancer/cga/indelocator_download
@@ -89,7 +90,9 @@
   * Filtering:No
   * Notes:    No
 3.  VarDict
-  See SNVs section for details.
+  
+ See SNVs section for details.
 4.  VarScan2
-  See SNVs section for details.
+ 
+ See SNVs section for details.
 
