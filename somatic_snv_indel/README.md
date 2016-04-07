@@ -77,8 +77,19 @@
 8. SomaticSeq
 
 ###Indels
-* MuTect2
-* Indelocator
-* VarDict
-* VarScan2
+1.  MuTect2
+  See SNVs section for details, and not used in SomaticSeq analysis.
+2.  Indelocator
+  * Version: IndelGenotyper.36.3336
+  * From:    https://www.broadinstitute.org/cancer/cga/indelocator_download
+  * Usage:
+  ```
+ java -jar IndelGenotyper.jar --analysis_type IndelGenotyperV2 --somatic --reference_sequence genome.fa --input_file:tumor Tumor.bam  --input_file:normal Normal.bam --out out.vcf
+ ```
+  * Filtering:No
+  * Notes:    No
+3.  VarDict
+  See SNVs section for details.
+4.  VarScan2
+  See SNVs section for details.
 
