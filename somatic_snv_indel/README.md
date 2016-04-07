@@ -36,7 +36,7 @@
     jsm.py train joint_snv_mix_two --min_normal_depth 8 --min_tumour_depth 6 genome.fa normal.bam tumor.bam config/joint_priors.cfg config/joint_params.cfg sample.cfg
      jsm.py classify joint_snv_mix_two genome.fa normal.bam tumor.bam sample.cfg sample.tsv
  ```
-  * Filtering: 
+  * Filtering: this filter used in SomaticSeq, and we put here to reduce JointSNVMix2 output file size (100GB to 1MB)
  ```
      awk -F "\t" 'NR!=1 && $4!="N" && $10+$11>=0.95' sample.tsv >sample.filtered.tsv
  ```
