@@ -3,10 +3,11 @@
 1. MuSE
   * Version:   MuSEv1.0rc_c039ffa
   * From:      http://bioinformatics.mdanderson.org/main/MuSE#Download
-  * Parameter: 
-    `MuSE call –O Output.Prefix –f Reference.Genome Tumor.bam Matched.Normal.bam` 
-
-    `MuSE sump -I Output.Prefix.MuSE.txt -G –O Output.Prefix.vcf –D dbsnp.vcf.gz`
+  * Usage:
+  ```
+    MuSE call –O Output.Prefix –f Reference.Genome Tumor.bam Matched.Normal.bam 
+    MuSE sump -I Output.Prefix.MuSE.txt -G –O Output.Prefix.vcf –D dbsnp.vcf.gz
+ ```
   * Filtering: No
   * Notes:     dbSNP VCF (Galgal5 version) was used, and see dbSNP_liftover step for details    
 2. MuTect
