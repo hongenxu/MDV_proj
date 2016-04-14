@@ -174,19 +174,24 @@ print "$python $somaticseq/SSeq_merged.vcf2tsv.py -ref $genome -myvcf $output_di
 print "$python $somaticseq/SSeq_merged.vcf2tsv.py -ref $genome -myvcf $output_dir/$sample.bina.somatic.indel.vcf -mutect $indelocator_dir/$sample.vcf  -varscan $varscan2_dir/$sample.indel.Somatic.hc.vcf -vardict $output_dir/$sample.vardict.indel.vcf -tbam $tumor_bam -nbam $normal_bam -outfile $output_dir/$sample.ensemble.indel.tsv\n";
 
 ###prediction
-print "R --no-save --args $snp_model $output_dir/$sample.ensemble.snp.tsv $output_dir/$sample\_$model.trained.snp.tsv  <$somaticseq/r_scripts/ada_model_predictor.R \n";
-print "R --no-save --args $indel_model $output_dir/$sample.ensemble.indel.tsv $output_dir/$sample\_$model.trained.indel.tsv <$somaticseq/r_scripts/ada_model_predictor.R \n";
+#print "R --no-save --args $snp_model $output_dir/$sample.ensemble.snp.tsv $output_dir/$sample\_$model.trained.snp.tsv  <$somaticseq/r_scripts/ada_model_predictor.R \n";
+#print "R --no-save --args $indel_model $output_dir/$sample.ensemble.indel.tsv $output_dir/$sample\_$model.trained.indel.tsv <$somaticseq/r_scripts/ada_model_predictor.R \n";
 
-print "$python $somaticseq/SSeq_tsv2vcf.py -tsv $output_dir/$sample\_$model.trained.snp.tsv -vcf $output_dir/$sample\_$model.trained.snp.vcf -pass 0.7 -low 0.1 -tools CGA VarScan2 JointSNVMix2 SomaticSniper VarDict MuSE -all -phred\n";
-print "$python $somaticseq/SSeq_tsv2vcf.py -tsv $output_dir/$sample\_$model.trained.indel.tsv -vcf $output_dir/$sample\_$model.trained.indel.vcf  -pass 0.7 -low 0.1 -tools CGA VarScan2  VarDict  -all -phred\n";
+#print "$python $somaticseq/SSeq_tsv2vcf.py -tsv $output_dir/$sample\_$model.trained.snp.tsv -vcf $output_dir/$sample\_$model.trained.snp.vcf -pass 0.7 -low 0.1 -tools CGA VarScan2 JointSNVMix2 SomaticSniper VarDict MuSE -all -phred\n";
+#print "$python $somaticseq/SSeq_tsv2vcf.py -tsv $output_dir/$sample\_$model.trained.indel.tsv -vcf $output_dir/$sample\_$model.trained.indel.vcf  -pass 0.7 -low 0.1 -tools CGA VarScan2  VarDict  -all -phred\n";
 
 
 ###remove intermediate files  
 foreach my $caller (@snp_callers){
-	#print "rm $output_dir/$sample.$caller.snp*\n";		
+	print "rm $output_dir/$sample.$caller.snp*\n";		
 }
 foreach my $caller (@indel_callers){
-	#print "rm $output_dir/$sample.$caller.indel*\n";		
+	print "rm $output_dir/$sample.$caller.indel*\n";		
 }
 
+print "rm $output_dir/$sample.jsm.tmp.vcf \n";
+print "rm $output_dir/$sample.combined.snp* \n";
+print "rm $output_dir/$sample.combined.indel* \n";
+print "rm $output_dir/$sample.EFF.dbSNP.combined.snp* \n";
+print "rm $output_dir/$sample.EFF.dbSNP.combined.indel* \n";
 
