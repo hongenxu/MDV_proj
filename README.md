@@ -8,7 +8,8 @@ Most of these scripts were only used to generate commands, and we redirected tho
 ##Requiring files
 
 ####Galgal5
-We used chicken reference genome Galgal5. 
+We used chicken reference genome Galgal5. Genome sequece was downloaded from ftp://ftp.ncbi.nih.gov/genomes/refseq/vertebrate_other/Gallus_gallus/latest_assembly_versions/GCF_000002315.4_Gallus_gallus-5.0/. See make_galgal5_reference.pl for details.
+
 
 ####dbSNP_liftover
 The chicken dbSNP file was based on genome version Galgal4. So we need first liftover galgal4 coordinates to galgal5 ones. 
