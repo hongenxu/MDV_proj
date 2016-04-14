@@ -22,6 +22,7 @@ use File::Temp qw(tempdir);
 
 #download file 
 system "wget ftp://ftp.ncbi.nih.gov/genomes/refseq/vertebrate_other/Gallus_gallus/latest_assembly_versions/GCF_000002315.4_Gallus_gallus-5.0/GCF_000002315.4_Gallus_gallus-5.0_genomic.fna.gz";
+system "gunzip GCF_000002315.4_Gallus_gallus-5.0_genomic.fna.gz";
 
 ###rename chromosome names from NC*** to 1, 2, 3 .... 
 ###keep unplaced contigs as NT****
