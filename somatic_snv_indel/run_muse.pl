@@ -18,17 +18,17 @@ my @normals=("738-0_S33","741-0_S34","756-0_S35","766-0_S36","798-0_S41","833-0_
 
 
 foreach my $num (0..25){
-	my $tumor_bam=join("",$tumor_dir,$tumors[$num],"_Bwa_RG_dedupped_realigned.bam");
-	my $normal_bam=join("",$normal_dir,$normals[$num],"_Bwa_RG_dedupped_realigned.bam");
+    my $tumor_bam=join("",$tumor_dir,$tumors[$num],"_Bwa_RG_dedupped_realigned.bam");
+    my $normal_bam=join("",$normal_dir,$normals[$num],"_Bwa_RG_dedupped_realigned.bam");
     die "$tumor_bam not exists\n" if ! -e $tumor_bam;
     die "$normal_bam not exists\n" if ! -e $normal_bam;
-	$tumors[$num]=~/.*(S\d+)/;
-	my $sample=$1;
+    $tumors[$num]=~/.*(S\d+)/;
+    my $sample=$1;
     my $cmd1="$muse call -f $genome  -O $output_dir/$sample $tumor_bam $normal_bam";
-	print "$cmd1\n";
-	#`qsub -b y -q all.q -l vf=8G,core=1 -N "mscall$sample" "$cmd1"`;
-	my $cmd2="$muse sump -I $output_dir/$sample.MuSE.txt -G -D $dbsnp -O $output_dir/$sample.vcf";
-	print "$cmd2\n";
+    print "$cmd1\n";
+    #`qsub -b y -q all.q -l vf=8G,core=1 -N "mscall$sample" "$cmd1"`;
+    my $cmd2="$muse sump -I $output_dir/$sample.MuSE.txt -G -D $dbsnp -O $output_dir/$sample.vcf";
+    print "$cmd2\n";
     #`qsub -b y -q all.q -l vf=8G,core=1 -N "mssump$sample" "$cmd2"`;
 }
 
