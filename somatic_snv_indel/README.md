@@ -58,7 +58,7 @@
   * Usage:
  ```
      VarDict -G genome -b "tumor_bam|normal_bam" -th 1 –F 0x500 –z -C -c 1 -S 2 -E 3 -g 4 5k_150bpOL_seg.bed  > out.vardict 
-     cat our.vardict | testsomatic.R | var2vcf_paired.pl –f 0.01
+     cat out.vardict | testsomatic.R | var2vcf_paired.pl –f 0.01
  ```
   * Filtering: steps 2 & 3 above can be seen as filtering
   * Notes:     (1) https://github.com/AstraZeneca-NGS/VarDict/issues/2 explains why VarDict needs input bed files and Bed regions are recommended to have 150 bp overlap for WGS data to call indels; (2) to speed up, split 5k_150bpOL_seg.bed into several files; (3)var2vcf_paired.pl was used since the author of VarDict recommended (see SomaticSeq manual)
