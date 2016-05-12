@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+# see README.md file in the same directory for details
 
 ###configuration
 my $varscan2="/home/users/xu/varscan-master/VarScan.v2.4.1.jar";
