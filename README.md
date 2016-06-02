@@ -32,5 +32,10 @@ We used SomaticSeq to identify somatic SNVs and Indels because SomaticSeq placed
 ##Identify somatic SVs
 * [Details](somatic_sv/README.md)
 
+##Identify somatic SNVs and Indels from RNAseq data
+* [Details](RNAseq/README.md)
+
 ##Identify significantly mutated genes/regions
+
+
 
