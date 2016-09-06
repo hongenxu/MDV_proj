@@ -76,7 +76,7 @@
      java -jar VarScan.jar processSomatic outputsnp.vcf
  ```
   * Notes:     (1) See http://dkoboldt.github.io/varscan/ for usage. (2) see https://www.biostars.org/p/123430/ for "NOT RESETTING NORMAL error using Varscan2" (3) Call varScan using named pipes (fifos) instead of anonymous pipe See https://gist.github.com/seandavi/1022747 for details. Also used in SomaticSeq “Run_5_callers”
-8. SomaticSeq
+
 
 ###Indels
 1.  MuTect2
@@ -97,4 +97,14 @@
 4.  VarScan2
  
  See SNVs section for details.
+5.  LoFreq
+  * Version:   LoFreq Star 2.1.2
+  * From:      https://github.com/CSB5/lofreq
+  * Usage: 
+  ```
+    lofreq somatic -n normal.bam  -t tumor.bam -f genome -o output_dir/sample_ -d dbsnp --threads 4 --call-indels --min-cov 6=
+  ```
+  * Filtering: No
+  * Notes:     No
+
 
