@@ -102,7 +102,7 @@
   * From:      https://github.com/CSB5/lofreq
   * Usage: 
   ```
-    lofreq somatic -n normal.bam  -t tumor.bam -f genome -o output_dir/sample_ -d dbsnp --threads 4 --call-indels --min-cov 6=
+    lofreq somatic -n normal.bam  -t tumor.bam -f genome -o output_dir/sample_ -d dbsnp --threads 4 --call-indels --min-cov 6
   ```
   * Filtering: No
   * Notes:     No
