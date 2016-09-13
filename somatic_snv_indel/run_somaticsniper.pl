@@ -11,6 +11,13 @@ my $tumor_dir="/home/proj/MDW_genomics/xu/final_bam/";
 my $normal_dir="/home/proj/MDW_genomics/xu/final_bam/";
 my $output_dir="/scratch/xu/MDV_project/somaticsniper_results";
 my $genome="/home/proj/MDW_genomics/xu/galgal5/galgal5.fa";
+my $samtools="/home/users/xu/samtools-0.1.12/samtools";
+my $snpfilter="/home/users/xu/somatic-sniper/src/scripts/snpfilter.pl";
+my $preparerc="/home/users/xu/somatic-sniper/src/scripts/prepare_for_readcount.pl";
+my $readcount="/home/users/xu/bam_readcount/bin/bam-readcount";
+my $fpfilter="/home/users/xu/somatic-sniper/src/scripts/fpfilter.pl";
+my $hc="/home/users/xu/somatic-sniper/src/scripts/highconfidence.pl";
+
 
 ##sample identifiers
 #the first tumor match the first normal
@@ -27,8 +34,19 @@ foreach my $num (0..25){
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
     my $cmd1="$ss -q 1 -Q 20 -s 0.01 -F vcf -f $genome $tumor_bam $normal_bam $output_dir/$sample.vcf";
-    print "$cmd1\n";
-    #`qsub -b y -q all.q -N "ss$sample" "$cmd1"`;
+    #print "$cmd1\n";
+    #`qsub -b y -q lofn.q -N "ss$sample" "$cmd1"`;
+    my $cmd2="$samtools pileup -cvi -f $genome $tumor_bam >$output_dir/$sample.pileup";
+    my $cmd3="perl $snpfilter --snp-file $output_dir/$sample.vcf --indel-file $output_dir/$sample.pileup --out-file $output_dir/$sample.filtered.vcf";
+    my $cmd4="perl $preparerc --snp-file $output_dir/$sample.filtered.vcf --out-file $output_dir/$sample.pos";
+    my $cmd5="$readcount -b 15 -q 1 -f $genome -l $output_dir/$sample.pos $tumor_bam >$output_dir/$sample.rc";
+    my $cmd6="perl $fpfilter --snp-file $output_dir/$sample.filtered.vcf --readcount-file $output_dir/$sample.rc";
+    my $cmd7="perl $hc       --snp-file $output_dir/$sample.filtered.vcf.fp_pass --out-file $output_dir/$sample.final.vcf --min-mapping-quality 40 --min-somatic-score 40";
+
+    print "$cmd3\n$cmd4\n$cmd5\n$cmd6\n$cmd7\n";
+    #`qsub -b y -q lofn.q -N "pileup$sample" "$cmd2" `;
+
+
 }
 
 
