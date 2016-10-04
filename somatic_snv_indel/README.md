@@ -50,8 +50,8 @@
  ```
      bam-somaticsniper -q 1 -Q 20 -s 0.01 -F vcf -f reference_genome tumor_bam normal_bam out.vcf
  ```
-  * Filtering: Basic filtering scripts were provided, but filtering was not used in SomaticSeq, so I decided not to use the filtering.
-  * Notes:     No
+  * Filtering: See run_somaticsniper.pl for filtering details.
+  * Notes:     Filtering was not used in SomaticSeq
 6. VarDict
   * Version:   VarDict-1.4.4
   * From:      https://github.com/AstraZeneca-NGS/VarDict (original perl version of VarDict) & https://github.com/AstraZeneca-NGS/VarDictJava (replacement java version, 10X fast)
