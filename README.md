@@ -5,7 +5,7 @@ Most of these scripts were only used to generate commands, and we redirected tho
 
 &copy;Hongen XU, Frishman Lab, TUM
 
-##Requiring files
+##Prerequisite files
 
 ####Galgal5 reference genome
 We used chicken reference genome Galgal5. Genome sequece was downloaded from ftp://ftp.ncbi.nih.gov/genomes/refseq/vertebrate_other/Gallus_gallus/latest_assembly_versions/GCF_000002315.4_Gallus_gallus-5.0/. See make_galgal5_reference.pl for details.
