@@ -82,7 +82,7 @@
   * From:      https://github.com/dkoboldt/varscan
   * Usage: 
  ```
-     samtools mpileup -f genome.fa -q 20 -B normal.bam tumor.bam >normal.tumor.fifo
+     samtools mpileup -f genome.fa -q 1 -B normal.bam tumor.bam >normal.tumor.fifo
      java -jar VarScan.jar somatic normal.tumor.fifo --mpileup 1 \
                                                      --output-vcf --output-snp output.snp.vcf \
                                                      --output-indel output.indel.vcf
@@ -109,7 +109,7 @@
                               --input_file:tumor Tumor.bam  \
                               --input_file:normal Normal.bam --out out.vcf
  ```
-  * Filtering:No
+  * Filtering:Custom filter provided by Alec, [indelocator_fpfilter.py](https://github.com/hongenxu/MDV_proj/blob/master/somatic_snv_indel/indelocator_fpfilter.py)
   * Notes:    No
 3.  VarDict
   
@@ -122,7 +122,8 @@
   * From:      https://github.com/CSB5/lofreq
   * Usage: 
   ```
-    lofreq somatic -n normal.bam  -t tumor.bam -f genome -o output_dir/sample_ -d dbsnp --threads 4 --call-indels --min-cov 6
+    lofreq somatic -n normal.bam  -t tumor.bam -f genome -o output_dir/sample_ \
+                                  -d dbsnp --threads 4 --call-indels --min-cov 6
   ```
   * Filtering: No
   * Notes:     No
