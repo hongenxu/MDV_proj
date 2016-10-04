@@ -57,7 +57,7 @@ system "gffread genes_modified.gff -T -o genes.gtf  -g $input_dir/galgal5.fa";
 system "gzip -c genes.gtf >genes.gtf.gz";
 
 #protein file not provieded in http://snpeff.sourceforge.net/SnpEff_manual.html#databases
-#system "cp $input_dir/GCF_000002315.4_Gallus_gallus-5.0_protein.faa protein.fa";
+system "cp $input_dir/GCF_000002315.4_Gallus_gallus-5.0_protein.faa protein.fa";
 
 #genomic sequences
 system "cp $input_dir/galgal5.fa ~/snpEff/data/Galgal5.00/sequences.fa";
