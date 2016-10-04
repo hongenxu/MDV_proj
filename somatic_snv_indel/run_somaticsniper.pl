@@ -33,14 +33,13 @@ foreach my $num (0..25){
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
     my $cmd1="$ss -q 1 -Q 20 -s 0.01 -F vcf -f $genome $tumor_bam $normal_bam $output_dir/$sample.vcf";
-    print "$cmd1\n";
     my $cmd2="$samtools pileup -cvi -f $genome $tumor_bam >$output_dir/$sample.pileup";
     my $cmd3="perl $snpfilter --snp-file $output_dir/$sample.vcf --indel-file $output_dir/$sample.pileup --out-file $output_dir/$sample.filtered.vcf";
     my $cmd4="perl $preparerc --snp-file $output_dir/$sample.filtered.vcf --out-file $output_dir/$sample.pos";
     my $cmd5="$readcount -b 15 -q 1 -f $genome -l $output_dir/$sample.pos $tumor_bam >$output_dir/$sample.rc";
     my $cmd6="perl $fpfilter --snp-file $output_dir/$sample.filtered.vcf --readcount-file $output_dir/$sample.rc";
 
-    print "$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
+    print "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
 
 
 }
