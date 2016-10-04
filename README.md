@@ -20,7 +20,7 @@ Since UCSC does not have Galgal4 to Galgal5 chain file, we created own chain fil
 We followed the guidance at http://snpeff.sourceforge.net/SnpEff_manual.html#databases to build custom SnpEff database from GTF file. See build_snpEff.pl for details.
 
 ####Variant Effect Predictor database 
-We followed the guidance at http://www.ensembl.org/info/docs/tools/vep/script/vep_cache.htmlBuilding  section Building a cache from a GTF or GFF file to build custom VEP database from GFF file. See build_vep.sh for details.
+We followed the guidance at http://www.ensembl.org/info/docs/tools/vep/script/vep_cache.html  section Building a cache from a GTF or GFF file to build custom VEP database from GFF file. See build_vep.sh for details.
 
 ##Fastq2bam pipeline
 Scripts were uesd to process original FASTQ files to final BAM files. The pipeline was designed following GATK best practice.
