@@ -75,7 +75,7 @@
              –z -C -c 1 -S 2 -E 3 -g 4 5k_150bpOL_seg.bed  > out.vardict
      cat out.vardict | testsomatic.R | var2vcf_paired.pl –f 0.01
  ```
-  * Filtering: Custom filter, see vardict_fpfilter.py for details
+  * Filtering: Custom filter, see **vardict_fpfilter.py** for details
   * Notes:     (1) https://github.com/AstraZeneca-NGS/VarDict/issues/2 explains why VarDict needs input bed files and Bed regions are recommended to have 150 bp overlap for WGS data to call indels; (2) to speed up, split 5k_150bpOL_seg.bed into several files; (3)var2vcf_paired.pl was used since the author of VarDict recommended (see SomaticSeq manual)
 7. VarScan2
   * Version:   VarScan.v2.4.1.jar
