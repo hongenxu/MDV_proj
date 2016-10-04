@@ -38,29 +38,26 @@ foreach my $num (0..25){
     my $cmd5="java -jar $varscan2 processSomatic $output_dir/$sample.snp.vcf";
     my $cmd6="java -jar $varscan2 processSomatic $output_dir/$sample.indel.vcf";
 
-    my $cmd7_1="perl $vcf2bed $output_dir/$sample.snp.Somatic.hc.vcf  >$output_dir/$sample.snp.somatic.pos";
-    my $cmd7_2="perl $vcf2bed $output_dir/$sample.snp.LOH.hc.vcf      >$output_dir/$sample.snp.loh.pos";
-    my $cmd7_3="perl $vcf2bed $output_dir/$sample.indel.Somatic.hc.vcf>$output_dir/$sample.indel.somatic.pos";
-    my $cmd7_4="perl $vcf2bed $output_dir/$sample.indel.LOH.hc.vcf    >$output_dir/$sample.indel.loh.pos";
-
-    my $cmd8_1="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.snp.somatic.pos   $tumor_bam  >$output_dir/$sample.snp.somatic.rc";
-    my $cmd8_2="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.snp.loh.pos       $normal_bam >$output_dir/$sample.snp.loh.rc";
-    my $cmd8_3="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.indel.somatic.pos $tumor_bam  >$output_dir/$sample.indel.somatic.rc";
-    my $cmd8_4="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.indel.loh.pos     $normal_bam >$output_dir/$sample.indel.loh.rc";
-
-
-    my $cmd9 ="java -jar $varscan2 fpfilter $output_dir/$sample.snp.LOH.hc.vcf     $output_dir/$sample.snp.loh.rc     --min-var-count 2 --min-var-count-lc 1 --min-var-basequal 15 --min-ref-mapqual 20 --min-var-mapqual 20 --output-file $output_dir/$sample.snp.LOH.hc.filtered.vcf";
-    my $cmd10="java -jar $varscan2 fpfilter $output_dir/$sample.snp.Somatic.hc.vcf $output_dir/$sample.snp.somatic.rc --min-var-count 2 --min-var-count-lc 1 --min-var-basequal 15 --min-ref-mapqual 20 --min-var-mapqual 20 --output-file $output_dir/$sample.snp.Somatic.hc.filtered.vcf";
-
-    my $cmd11="java -jar $varscan2 fpfilter $output_dir/$sample.indel.LOH.hc.vcf      $output_dir/$sample.indel.loh.rc      --output-file $output_dir/$sample.indel.LOH.hc.filtered.vcf";
-    my $cmd12="java -jar $varscan2 fpfilter $output_dir/$sample.indel.Somatic.hc.vcf  $output_dir/$sample.indel.somatic.rc  --output-file $output_dir/$sample.indel.Somatic.hc.filtered.vcf";
+    ##not used fomr $cmd7 to $cmd12
+    #my $cmd7_1="perl $vcf2bed $output_dir/$sample.snp.Somatic.hc.vcf  >$output_dir/$sample.snp.somatic.pos";
+    #my $cmd7_2="perl $vcf2bed $output_dir/$sample.snp.LOH.hc.vcf      >$output_dir/$sample.snp.loh.pos";
+    #my $cmd7_3="perl $vcf2bed $output_dir/$sample.indel.Somatic.hc.vcf>$output_dir/$sample.indel.somatic.pos";
+    #my $cmd7_4="perl $vcf2bed $output_dir/$sample.indel.LOH.hc.vcf    >$output_dir/$sample.indel.loh.pos";
+    #my $cmd8_1="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.snp.somatic.pos   $tumor_bam  >$output_dir/$sample.snp.somatic.rc";
+    #my $cmd8_2="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.snp.loh.pos       $normal_bam >$output_dir/$sample.snp.loh.rc";
+    #my $cmd8_3="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.indel.somatic.pos $tumor_bam  >$output_dir/$sample.indel.somatic.rc";
+    #my $cmd8_4="$bamrc -b 15 -q 1 -f $genome -l $output_dir/$sample.indel.loh.pos     $normal_bam >$output_dir/$sample.indel.loh.rc";
+    #my $cmd9 ="java -jar $varscan2 fpfilter $output_dir/$sample.snp.LOH.hc.vcf     $output_dir/$sample.snp.loh.rc     --min-var-count 2 --min-var-count-lc 1 --min-var-basequal 15 --min-ref-mapqual 20 --min-var-mapqual 20 --output-file $output_dir/$sample.snp.LOH.hc.filtered.vcf";
+    #my $cmd10="java -jar $varscan2 fpfilter $output_dir/$sample.snp.Somatic.hc.vcf $output_dir/$sample.snp.somatic.rc --min-var-count 2 --min-var-count-lc 1 --min-var-basequal 15 --min-ref-mapqual 20 --min-var-mapqual 20 --output-file $output_dir/$sample.snp.Somatic.hc.filtered.vcf";
+    #my $cmd11="java -jar $varscan2 fpfilter $output_dir/$sample.indel.LOH.hc.vcf      $output_dir/$sample.indel.loh.rc      --output-file $output_dir/$sample.indel.LOH.hc.filtered.vcf";
+    #my $cmd12="java -jar $varscan2 fpfilter $output_dir/$sample.indel.Somatic.hc.vcf  $output_dir/$sample.indel.somatic.rc  --output-file $output_dir/$sample.indel.Somatic.hc.filtered.vcf";
 
 
     open OUT, ">$sample.varscan2.job" or die $!;
     print OUT "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
-    print OUT "$cmd7_1\n$cmd7_2\n$cmd7_3\n$cmd7_4\n";
-    print OUT "$cmd8_1\n$cmd8_2\n$cmd8_3\n$cmd8_4\n";
-    print OUT "$cmd9\n$cmd10\n$cmd11\n$cmd12\n";
+    #print OUT "$cmd7_1\n$cmd7_2\n$cmd7_3\n$cmd7_4\n";
+    #print OUT "$cmd8_1\n$cmd8_2\n$cmd8_3\n$cmd8_4\n";
+    #print OUT "$cmd9\n$cmd10\n$cmd11\n$cmd12\n";
     close OUT;
     #then qsub $sample.varscan2.job to the cluster
 }
