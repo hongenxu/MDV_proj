@@ -17,9 +17,12 @@
   * From:      https://github.com/broadinstitute/mutect
   * Usage: 
  ```
-     java -jar mutect-1.1.7.jar --analysis_type MuTect       --reference_sequence genome \
-                                --input_file:tumor tumor_bam --input_file:normal normal_bam\
-                                --out  output_dir/sample.classical.out --coverage_file output_dir/sample.cov.out \
+     java -jar mutect-1.1.7.jar --analysis_type MuTect \
+                                --reference_sequence genome \
+                                --input_file:tumor tumor_bam \
+                                --input_file:normal normal_bam \
+                                --out  output_dir/sample.classical.out \
+                                --coverage_file output_dir/sample.cov.out \
                                 --vcf output_dir/sample.vcf
  ```
   * Filtering: No
@@ -29,7 +32,11 @@
   * From:      https://www.broadinstitute.org/gatk/download/
   * Usage: 
  ```
-     java -jar GenomeAnalysisTK.jar --analysis_type MuTect2  --reference_sequence genome --input_file:tumor tumor_bam --input_file:normal normal_bam --out  output_dir/sample.vcf
+     java -jar GenomeAnalysisTK.jar --analysis_type MuTect2\
+                                    --reference_sequence genome\
+                                    --input_file:tumor tumor_bam\
+                                    --input_file:normal normal_bam\
+                                    --out  output_dir/sample.vcf
  ```
   * Filtering: No
   * Notes:     Not included in SomaticSeq analysis
@@ -38,8 +45,12 @@
   * From:      https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/joint-snv-mix/JointSNVMix-0.7.5.tar.gz
   * Usage: 
  ```
-    jsm.py train joint_snv_mix_two --min_normal_depth 8 --min_tumour_depth 6 genome.fa normal.bam tumor.bam config/joint_priors.cfg config/joint_params.cfg sample.cfg
-     jsm.py classify joint_snv_mix_two genome.fa normal.bam tumor.bam sample.cfg sample.tsv
+    jsm.py train joint_snv_mix_two --min_normal_depth 8 --min_tumour_depth 6 \
+                                   genome.fa normal.bam tumor.bam \
+                                   config/joint_priors.cfg \
+                                   config/joint_params.cfg sample.cfg
+    jsm.py classify joint_snv_mix_two genome.fa normal.bam tumor.bam \
+                                      sample.cfg sample.tsv
  ```
   * Filtering: this filter used in SomaticSeq, and we put here to reduce JointSNVMix2 output file size (100GB to 1MB)
  ```
@@ -60,7 +71,8 @@
   * From:      https://github.com/AstraZeneca-NGS/VarDict (original perl version of VarDict) & https://github.com/AstraZeneca-NGS/VarDictJava (replacement java version, 10X fast)
   * Usage:
  ```
-     VarDict -G genome -b "tumor_bam|normal_bam" -th 1 –F 0x500 –z -C -c 1 -S 2 -E 3 -g 4 5k_150bpOL_seg.bed  > out.vardict 
+     VarDict -G genome -b "tumor_bam|normal_bam" -th 1 –F 0x500 \
+             –z -C -c 1 -S 2 -E 3 -g 4 5k_150bpOL_seg.bed  > out.vardict
      cat out.vardict | testsomatic.R | var2vcf_paired.pl –f 0.01
  ```
   * Filtering: steps 2 & 3 above can be seen as filtering
@@ -90,7 +102,10 @@
   * From:    https://www.broadinstitute.org/cancer/cga/indelocator_download
   * Usage:
   ```
- java -jar IndelGenotyper.jar --analysis_type IndelGenotyperV2 --somatic --reference_sequence genome.fa --input_file:tumor Tumor.bam  --input_file:normal Normal.bam --out out.vcf
+ java -jar IndelGenotyper.jar --analysis_type IndelGenotyperV2 \
+                              --somatic --reference_sequence genome.fa\
+                              --input_file:tumor Tumor.bam  \
+                              --input_file:normal Normal.bam --out out.vcf
  ```
   * Filtering:No
   * Notes:    No
