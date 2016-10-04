@@ -17,7 +17,10 @@
   * From:      https://github.com/broadinstitute/mutect
   * Usage: 
  ```
-     java -jar mutect-1.1.7.jar --analysis_type MuTect  --reference_sequence genome --input_file:tumor tumor_bam --input_file:normal normal_bam --out  output_dir/sample.classical.out --coverage_file output_dir/sample.cov.out --vcf output_dir/sample.vcf
+     java -jar mutect-1.1.7.jar --analysis_type MuTect       --reference_sequence genome \
+                                --input_file:tumor tumor_bam --input_file:normal normal_bam\
+                                --out  output_dir/sample.classical.out --coverage_file output_dir/sample.cov.out \
+                                --vcf output_dir/sample.vcf
  ```
   * Filtering: No
   * Notes:     No
