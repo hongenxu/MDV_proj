@@ -187,10 +187,10 @@ print "$python $somaticseq/SSeq_tsv2vcf.py -tsv $output_dir/$sample.ensemble.ind
 
 ###remove intermediate files
 foreach my $caller (@snp_callers){
-    print "rm $output_dir/$sample.$caller.snp*\n";
+print "rm $output_dir/$sample.$caller.snp*\n";
 }
 foreach my $caller (@indel_callers){
-    print "rm $output_dir/$sample.$caller.indel*\n";
+print "rm $output_dir/$sample.$caller.indel*\n";
 }
 
 print "rm $output_dir/$sample.jsm.tmp.vcf \n";
