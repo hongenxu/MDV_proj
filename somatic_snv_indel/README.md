@@ -1,7 +1,7 @@
 
-##Study design
+## Study design
 ![alt text](https://github.com/hongenxu/MDV_proj/blob/master/others/snv_indel_pipeline.jpg "SNV Indel pipeline")
-###SNVs
+### SNVs
 1. MuSE
   * Version:   MuSEv1.0rc_c039ffa
   * From:      http://bioinformatics.mdanderson.org/main/MuSE#Download
@@ -95,7 +95,7 @@
   * Notes:     (1) See http://dkoboldt.github.io/varscan/ for usage. (2) see https://www.biostars.org/p/123430/ for "NOT RESETTING NORMAL error using Varscan2" (3) Call varScan using named pipes (fifos) instead of anonymous pipe See https://gist.github.com/seandavi/1022747 for details. Also used in SomaticSeq “Run_5_callers”
 
 
-###Indels
+### Indels
 1.  MuTect2
   
  See SNVs section for details, and not used in SomaticSeq analysis.
