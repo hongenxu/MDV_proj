@@ -99,6 +99,7 @@
 1.  MuTect2
   
  See SNVs section for details, and not used in SomaticSeq analysis.
+
 2.  Indelocator
   * Version: IndelGenotyper.36.3336
   * From:    https://www.broadinstitute.org/cancer/cga/indelocator_download
@@ -111,12 +112,15 @@
  ```
   * Filtering:Custom filter provided by Alec, [indelocator_fpfilter.py](https://github.com/hongenxu/MDV_proj/blob/master/somatic_snv_indel/indelocator_fpfilter.py)
   * Notes:    No
+
 3.  VarDict
   
  See SNVs section for details.
+
 4.  VarScan2
  
  See SNVs section for details.
+
 5.  LoFreq
   * Version:   LoFreq Star 2.1.2
   * From:      https://github.com/CSB5/lofreq
