@@ -30,11 +30,11 @@ Scripts were uesd to process original FASTQ files to final BAM files. The pipeli
 We used SomaticSeq to identify somatic SNVs and Indels because SomaticSeq placed #1 and #2 in INDEL and SNV in the Stage 5 of the ICGC-TCGA DREAM Somatic Mutation Calling Challenge.
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/somatic_snv_indel)
 
-## Identify somatic SVs
-* [Details](somatic_sv/README.md)
-
 ## Identify somatic SCNAs
 * [Details](somatic_scna/README.md)
+
+## Identify somatic SVs
+* [Details](somatic_sv/README.md)
 
 ## Identify somatic SNVs and Indels from RNAseq data
 * [Details](RNAseq/README.md)
