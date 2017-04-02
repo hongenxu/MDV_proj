@@ -32,31 +32,12 @@ foreach my $num (0..25){
     system "mkdir -p $output_dir/$sample";
     my $cmd5="Rscript copycat.R $output_dir/$sample.normal.window $output_dir/$sample.tumor.window $output_dir/$sample.normal.vcf $output_dir/$sample.tumor.vcf $output_dir/$sample";
 
-    system "cp ~/template.sh $sample.copycat.sh";
+    system "cp ~/template.sh ~/$sample.copycat.sh";
     open OUT, ">>$sample.copycat.sh" or die $!;
     print OUT "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n";
     close OUT;
-    my $cwd=`pwd`;
-    chomp $cwd;
-    #`qsub -b y -q all.q -N "$sample" "cd $cwd && sh $sample.copycat.sh"`;
-    open RESULT,"$output_dir/$sample/alts.paired.dat" or die $!;
-    while (<RESULT>){
-        chomp;
-        my ($chr,$start,$end,$a,$copy)=split/\t/,$_;
-        my $change="";
-        if ($copy>2){
-            $change="gain";
-        }
-        elsif ($copy<2) {
-            $change="loss";
-        }
-        else {
-            $change="neutral";
-        }
-        print "$chr\t$start\t$end\t$change\t$sample\n";
+    #`qsub -b y -q all.q -N "$sample" "sh ~/$sample.copycat.sh"`;
 
-    }
-    close RESULT;
 }
 
 
