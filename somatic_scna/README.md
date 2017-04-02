@@ -19,12 +19,17 @@ copycat.R was executed by run_copycat.pl.
 * From: http://www.openbioinformatics.org/penncnv/download/gw6.tar.gz
 * Notes: only for preprocessing CEL data to LRR and BAF
 
-2. genoCN
+2. PennCNV
+* Version: 1.0.4
+* From: https://github.com/WGLab/PennCNV/releases
+* Notes: for creating Population Frequency of B allele (PFB) file using 8 F1 control birds
+
+3. genoCN
 * Version: 1.26.0
 * From: https://www.bioconductor.org/packages/release/bioc/html/genoCN.html
 * Notes:
 
-3. ASCAT
+4. ASCAT
 * Version: 2.4.3
 * From: https://github.com/Crick-CancerGenomics/ascat
 * Notes: 
