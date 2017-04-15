@@ -2,9 +2,9 @@
 
 # cd /scratch/steep/7callers/vardict_results
 
-#python ./scripts/vardict_fpfilter_INDELs.py \
+#python ./scripts/vardict_fpfilter.py \
 #S1.vcf \
-#S1_fpfiltered_INDELs.vcf
+    #S1_fpfiltered.vcf
 
 ######################################
 import sys # This is a module to be imported for the next two lines allowing the script to take an input and output file as arguments
