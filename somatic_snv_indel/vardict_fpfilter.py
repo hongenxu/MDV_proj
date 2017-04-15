@@ -4,7 +4,7 @@
 
 #python ./scripts/vardict_fpfilter.py \
 #S1.vcf \
-    #S1_fpfiltered.vcf
+#S1_fpfiltered.vcf
 
 ######################################
 import sys # This is a module to be imported for the next two lines allowing the script to take an input and output file as arguments
