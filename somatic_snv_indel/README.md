@@ -130,6 +130,6 @@
                                   -d dbsnp --threads 4 --call-indels --min-cov 6
   ```
   * Filtering: No
-  * Notes:     indel qualities were added using ```lofreq indelqual```
+  * Notes:     indel qualities were added using ```lofreq indelqual --dindel```
 
 
