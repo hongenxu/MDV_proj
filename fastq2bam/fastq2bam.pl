@@ -1,5 +1,5 @@
 #/usr/bin/perl
-#require the config.txt file, we keep a copy in the current directory 
+#require the config.txt file, we keep a copy in the current directory
 #usage:perl fastq2bam.pl --sample sample_id
 #we direct the ouputput of this script to a file and then 'qsub' the file to the cluster
 
@@ -9,14 +9,14 @@ use Getopt::Long;
 use List::MoreUtils qw(uniq);
 
 
-###parameter and usage  
+###parameter and usage
 my $sample="";
 my $usage="Usage: perl fastq2bam.pl --sample sample_id\nSee the first column of config.txt for possible sample_id value (i.e.,002683_Line-6).\n";
 GetOptions(
             "sample=s"   => \$sample);
 die $usage if $sample eq "";
 
-###input and output directory configuration 
+###input and output directory configuration
 my $input_dir="/home/proj/MDW_genomics/MSU_HPCC_Research/DNA_Seq/Fastq_All_Samples/";##fastq files
 my $output_dir="/scratch/xu/MDV_project/fastq2bam";
 my $trimm_output="$output_dir/trimm/";
@@ -29,11 +29,11 @@ my $bwa_output="$output_dir/bwa/";
 mkdir $bwa_output if ! -d $bwa_output;
 my $post_output="$output_dir/post_alignment/";
 mkdir $post_output if ! -d $post_output;
-my $merged_output="$output_dir/merged/";##final bam comes here 
+my $merged_output="$output_dir/merged/";##final bam comes here
 mkdir $merged_output if ! -d $merged_output;
 
-##apps and requring files 
-my $sample_cfg="/scratch/xu/MDV_project/fastq2bam/config.txt";
+##apps and requring files
+my $sample_cfg="/home/users/xu/MDV_proj/fastq2bam/config.txt";
 my $trimmomatic="/home/users/xu/Trimmomatic-0.35";
 my $sickle="/home/users/xu/sickle-1.33/sickle";
 my $fastqc="/home/users/xu/FastQC/fastqc";
@@ -44,7 +44,7 @@ my $gatk="/home/users/xu/gatk-3.5";
 my $GalGal5_Ref="/home/users/xu/bwa/galgal5.fa";
 
 
-###read config.txt file 
+###read config.txt file
 open CFG, "$sample_cfg" or die "Cannot find the sample configure file!\n";
 my @barcodes;
 my @lanes;
@@ -71,7 +71,7 @@ while (<CFG>){
 close CFG;
 
 if ($sample_label eq ""){
-	die  "Cannot find sample:$sample in sample configure file $sample_cfg\n";	
+	die  "Cannot find sample:$sample in sample configure file $sample_cfg\n";
 }
 
 #######################main#############################
@@ -82,17 +82,17 @@ if (scalar@reads !=2){
 if (scalar@barcodes !=1) {
 	die "Error in barcodes!\n";
 }
-my $new_sample=$sample;	
+my $new_sample=$sample;
 if ($sample=~/^017/) {
-	
+
 	$new_sample=~s/017//g;
 	$new_sample=join("_",$new_sample,$sample_label);
 }
 else {
-		
+
 }
 
-my $merge_sam_input="";###used in the last step 
+my $merge_sam_input="";###used in the last step
 
 foreach my $lane (@lanes){
 
@@ -104,14 +104,14 @@ foreach my $lane (@lanes){
 		die "$tri_in_R1"," or ","$tri_in_R2", " not exists!\n";
 	}
 	$lane=~s/00//g; ###change from "L001" to "L1"
-	
+
 	my $tri_out_R1_paired=join("",$trimm_output,$new_sample,"_",$lane,"_","R1","_","paired_Trimmomatic.fastq.gz");
 	my $tri_out_R2_paired=join("",$trimm_output,$new_sample,"_",$lane,"_","R2","_","paired_Trimmomatic.fastq.gz");
 	my $tri_out_R1_unpaired=join("",$trimm_output,$new_sample,"_",$lane,"_","R1","_","unpaired_Trimmomatic.fastq.gz");
 	my $tri_out_R2_unpaired=join("",$trimm_output,$new_sample,"_",$lane,"_","R2","_","unpaired_Trimmomatic.fastq.gz");
 
 	my $cmd1="java -jar $trimmomatic/trimmomatic-0.35.jar PE -threads 4 $tri_in_R1 $tri_in_R2 $tri_out_R1_paired $tri_out_R1_unpaired $tri_out_R2_paired $tri_out_R2_unpaired ILLUMINACLIP:$trimmomatic/adapters/TruSeq2-PE.fa:2:30:10 HEADCROP:9";
-	print "$cmd1\n";		
+	print "$cmd1\n";
 
 	#####################read trimming using sickle	##########################################
 	my $sic_R1_paired=$tri_out_R1_paired;
@@ -143,17 +143,17 @@ foreach my $lane (@lanes){
 	my $bwa_in_singles_SE=$sic_out_singles_SE;##will not be used due to failure to pass fastqc
 	my $bwa_out_sam=join("",$bwa_output,$new_sample,"_",$lane,"_","Bwa_NRG_Yet.sam");
 	my $cmd5="$bwa mem -t 11 -T 20 $bwa_ref $bwa_in_R1 $bwa_in_R2 >$bwa_out_sam";
-	
+
 	print "$cmd5\n";
-	
+
 
 	########################### post-processing using picard and gatk###############################
 	###Add ReadGroups using picard####
 
-	my $pic_in_sam=$bwa_out_sam;	
-	my $pic_out_sam=join("",$post_output,$new_sample,"_",$lane,"_","Bwa_ReadGroups.sam");	
+	my $pic_in_sam=$bwa_out_sam;
+	my $pic_out_sam=join("",$post_output,$new_sample,"_",$lane,"_","Bwa_ReadGroups.sam");
 	my $new_lane=$lane;
-	$new_lane=~s/L/lane/g; ##change "L1" to "lane1"		
+	$new_lane=~s/L/lane/g; ##change "L1" to "lane1"
 	my $RGID=join("_",$new_sample,$new_lane);
 	my $RGPL="Illumina";
 	my $RGPU=join("_",$barcode,$new_lane);
@@ -162,7 +162,7 @@ foreach my $lane (@lanes){
 	my $cmd6="java -Xmx40g -jar $picard AddOrReplaceReadGroups INPUT=$pic_in_sam OUTPUT=$pic_out_sam RGID=$RGID RGPL=$RGPL RGPU=$RGPU RGSM=$RGSM RGLB=$RGLB";
 	print "$cmd6\n";
 
-	
+
 	########further post-processing
 
 	my $RG_sam_by_lane=join("",$post_output,$new_sample,"_",$lane,"_","Bwa_ReadGroups.sam");
@@ -172,26 +172,26 @@ foreach my $lane (@lanes){
 	my $bam_by_lane_marked_index=join("",$post_output,$new_sample,"_",$lane,"_","Bwa_RG_marked.bai");
 	my $Intervals_by_lane=join("",$post_output,$new_sample,"_",$lane,"_","Intervals_by_lane.list");
 	my $Realinged_bam_by_lane=join("",$post_output,$new_sample,"_",$lane,"_","Realinged_bam_by_lane.bam");
-	
+
 	my $cmd7="java -Xmx40g -jar $picard SortSam INPUT=$RG_sam_by_lane OUTPUT=$RG_bam_by_lane SORT_ORDER=coordinate";
 	my $cmd8="java -Xmx40g -jar $picard MarkDuplicates INPUT=$RG_bam_by_lane OUTPUT=$bam_by_lane_marked METRICS_FILE=$metrix_file_by_lane MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000";
 	my $cmd9="java -Xmx40g -jar $picard BuildBamIndex INPUT=$bam_by_lane_marked OUTPUT=$bam_by_lane_marked_index";
 	my $cmd10="java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T RealignerTargetCreator -R $GalGal5_Ref -I $bam_by_lane_marked -o $Intervals_by_lane";
 	my $cmd11="java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $GalGal5_Ref -I $bam_by_lane_marked -targetIntervals $Intervals_by_lane -o $Realinged_bam_by_lane";
-	
+
 	print "$cmd7\n";
-	
+
 	print "$cmd8\n";
-	
+
 	print "$cmd9\n";
-	
+
 	print "$cmd10\n";
-	
+
 	print "$cmd11\n";
 
 	my $sam_lane=join("","INPUT=",$post_output,$new_sample,"_",$lane,"_","Realinged_bam_by_lane.bam");
 	$merge_sam_input=join(" ",$merge_sam_input,$sam_lane);
-	
+
 }
 
 #print "\n$merge_sam_input\n";

@@ -1,12 +1,13 @@
 #!/usr/bin/perl
 
-#this script was used to submit jobs to our cluster 
-#requir fastq2bam.pl in the same directory 
+#this script was used to submit jobs to our computer cluster
+#requir fastq2bam.pl in the same directory
 #usage: perl submit.pl
 
 use strict;
 use warnings;
 
+#sample identifiers
 my %hash=(
 	'002683_Line-6' =>'S31',
 	'002684_Line-7' =>'S32',
@@ -63,13 +64,14 @@ my %hash=(
 foreach my $num (1..51){
 	my $sample=join("","S",$num);
 	foreach my $key (keys %hash){
-		if ($hash{$key}	eq "$sample"){	
-			system "perl fastq2bam.pl --sample $key >$sample.sub"; #direct the output to a file 
-			print qq(qsub -b y -l vf=48G,core=1 -q all.q -N "$sample" "sh $sample.sub"\n);
-			
+		if ($hash{$key}	eq "$sample"){
+			system "perl fastq2bam.pl --sample $key >$sample.sub"; #direct the output to a file
+            my $cmd=qq(qsub -b y -l vf=48G,core=1 -q all.q -N "$sample" "sh $sample.sub"\n);
+			print "$cmd\n";
+            #system "$cmd"; #uncomment this line if you do need to submit the job
 		}
 
-	}	
+	}
 
 }
 
