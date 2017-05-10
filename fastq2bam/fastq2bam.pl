@@ -190,8 +190,8 @@ foreach my $lane (@lanes){
 	my $cmd7="java -Xmx40g -jar $picard SortSam INPUT=$RG_sam_by_lane OUTPUT=$RG_bam_by_lane SORT_ORDER=coordinate";
 	my $cmd8="java -Xmx40g -jar $picard MarkDuplicates INPUT=$RG_bam_by_lane OUTPUT=$bam_by_lane_marked METRICS_FILE=$metrix_file_by_lane MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000";
 	my $cmd9="java -Xmx40g -jar $picard BuildBamIndex INPUT=$bam_by_lane_marked OUTPUT=$bam_by_lane_marked_index";
-	my $cmd10="java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T RealignerTargetCreator -R $GalGal5_Ref -I $bam_by_lane_marked -o $Intervals_by_lane";
-	my $cmd11="java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $GalGal5_Ref -I $bam_by_lane_marked -targetIntervals $Intervals_by_lane -o $Realinged_bam_by_lane";
+	my $cmd10="java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T RealignerTargetCreator -R $reference -I $bam_by_lane_marked -o $Intervals_by_lane";
+	my $cmd11="java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $reference -I $bam_by_lane_marked -targetIntervals $Intervals_by_lane -o $Realinged_bam_by_lane";
 
 	print "$cmd7\n";
 	print "$cmd8\n";
@@ -228,9 +228,9 @@ print "\n";
 print "java -Xmx40g -jar $picard BuildBamIndex INPUT=$marked_merged_bam OUTPUT=$marked_merged_bam_index";
 print "\n";
 #indel realignment
-print "java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T RealignerTargetCreator -R $GalGal5_Ref -I $marked_merged_bam -o $Intervals_across_lanes" ;
+print "java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T RealignerTargetCreator -R $reference -I $marked_merged_bam -o $Intervals_across_lanes" ;
 print "\n";
-print "java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $GalGal5_Ref -I $marked_merged_bam -targetIntervals $Intervals_across_lanes -o $Dedupped_realigned_merged_BAM";
+print "java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $reference -I $marked_merged_bam -targetIntervals $Intervals_across_lanes -o $Dedupped_realigned_merged_BAM";
 print "\n";
 #index BAM files
 print "java -Xmx40g -jar $picard BuildBamIndex  INPUT=$Dedupped_realigned_merged_BAM OUTPUT=$Dedupped_realigned_merged_BAM_index";
