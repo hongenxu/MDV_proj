@@ -9,42 +9,54 @@ use Getopt::Long;
 use List::MoreUtils qw(uniq);
 
 
-###parameter and usage
+###parameter and usage for this script
+
 my $sample="";
-my $usage="Usage: perl fastq2bam.pl --sample sample_id\nSee the first column of config.txt for possible sample_id value (i.e.,002683_Line-6).\n";
+my $usage="Usage: perl fastq2bam.pl --sample sample_id\nSee the first column of config.txt for possible sample_id value (e.g.,002683_Line-6).\n";
 GetOptions(
             "sample=s"   => \$sample);
 die $usage if $sample eq "";
 
 ###input and output directory configuration
-my $input_dir="/home/proj/MDW_genomics/MSU_HPCC_Research/DNA_Seq/Fastq_All_Samples/";##fastq files
+
+#the location for fastq files
+my $input_dir="/home/proj/MDW_genomics/MSU_HPCC_Research/DNA_Seq/Fastq_All_Samples/";
+
+#main output directory
 my $output_dir="/scratch/xu/MDV_project/fastq2bam";
+#trimmomatic output directory
 my $trimm_output="$output_dir/trimm/";
 mkdir $trimm_output if ! -d $trimm_output;
+#sickle output directory
 my $sickle_output="$output_dir/sickle/";
 mkdir $sickle_output if ! -d $sickle_output;
+#fastqc output directory
 my $fastqc_output="$output_dir/fastqc/";
 mkdir $fastqc_output if ! -d $fastqc_output;
+#bwa output directory
 my $bwa_output="$output_dir/bwa/";
 mkdir $bwa_output if ! -d $bwa_output;
+#post-processing output directory
 my $post_output="$output_dir/post_alignment/";
 mkdir $post_output if ! -d $post_output;
-my $merged_output="$output_dir/merged/";##final bam comes here
+#merged output directory, for storing final bam file merging all lanes
+my $merged_output="$output_dir/merged/";
 mkdir $merged_output if ! -d $merged_output;
 
-##apps and requring files
+##softwares and requring files
+
 my $sample_cfg="/home/users/xu/MDV_proj/fastq2bam/config.txt";
 my $trimmomatic="/home/users/xu/Trimmomatic-0.35";
 my $sickle="/home/users/xu/sickle-1.33/sickle";
 my $fastqc="/home/users/xu/FastQC/fastqc";
 my $bwa="/home/users/xu/bwa/bwa";
-my $bwa_ref="/home/users/xu/bwa/galgal5.fa";
+my $reference="/home/proj/MDW_genomics/xu/galgal5/galgal5.fa";
 my $picard="/home/users/xu/picard-tools-1.141/picard.jar";
 my $gatk="/home/users/xu/gatk-3.5";
-my $GalGal5_Ref="/home/users/xu/bwa/galgal5.fa";
 
 
 ###read config.txt file
+
 open CFG, "$sample_cfg" or die "Cannot find the sample configure file!\n";
 my @barcodes;
 my @lanes;
@@ -73,6 +85,8 @@ close CFG;
 if ($sample_label eq ""){
 	die  "Cannot find sample:$sample in sample configure file $sample_cfg\n";
 }
+
+
 
 #######################main#############################
 
@@ -142,7 +156,7 @@ foreach my $lane (@lanes){
 	my $bwa_in_singles_PE=$sic_out_singles_PE;
 	my $bwa_in_singles_SE=$sic_out_singles_SE;##will not be used due to failure to pass fastqc
 	my $bwa_out_sam=join("",$bwa_output,$new_sample,"_",$lane,"_","Bwa_NRG_Yet.sam");
-	my $cmd5="$bwa mem -t 11 -T 20 $bwa_ref $bwa_in_R1 $bwa_in_R2 >$bwa_out_sam";
+    my $cmd5="$bwa mem -t 11 -T 20 $reference $bwa_in_R1 $bwa_in_R2 >$bwa_out_sam";
 
 	print "$cmd5\n";
 
@@ -150,7 +164,7 @@ foreach my $lane (@lanes){
 	########################### post-processing using picard and gatk###############################
 	###Add ReadGroups using picard####
 
-	my $pic_in_sam=$bwa_out_sam;
+    my $pic_in_sam=$bwa_out_sam;
 	my $pic_out_sam=join("",$post_output,$new_sample,"_",$lane,"_","Bwa_ReadGroups.sam");
 	my $new_lane=$lane;
 	$new_lane=~s/L/lane/g; ##change "L1" to "lane1"
@@ -163,7 +177,7 @@ foreach my $lane (@lanes){
 	print "$cmd6\n";
 
 
-	########further post-processing
+    ########further post-processing, including sorting, marking duplicates, indel realignment
 
 	my $RG_sam_by_lane=join("",$post_output,$new_sample,"_",$lane,"_","Bwa_ReadGroups.sam");
 	my $RG_bam_by_lane=join("",$post_output,$new_sample,"_",$lane,"_","Bwa_RG.bam");
@@ -180,13 +194,9 @@ foreach my $lane (@lanes){
 	my $cmd11="java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $GalGal5_Ref -I $bam_by_lane_marked -targetIntervals $Intervals_by_lane -o $Realinged_bam_by_lane";
 
 	print "$cmd7\n";
-
 	print "$cmd8\n";
-
 	print "$cmd9\n";
-
 	print "$cmd10\n";
-
 	print "$cmd11\n";
 
 	my $sam_lane=join("","INPUT=",$post_output,$new_sample,"_",$lane,"_","Realinged_bam_by_lane.bam");
@@ -205,18 +215,24 @@ my $Intervals_across_lanes=join("",$merged_output,$new_sample,"_","Intervals_acr
 my $Dedupped_realigned_merged_BAM=join("",$merged_output,$new_sample,"_","Bwa_RG_dedupped_realigned.bam");
 my $Dedupped_realigned_merged_BAM_index=join("",$merged_output,$new_sample,"_","Bwa_RG_dedupped_realigned.bai");
 
-
+#merge BAM files from all lanes
 print "java -Xmx40g -jar $picard MergeSamFiles  $merge_sam_input OUTPUT=$merged_bam AS=true";
 print "\n";
+#index BAM file
 print "java -Xmx40g -jar $picard BuildBamIndex INPUT=$merged_bam OUTPUT=$merged_bam_index";
 print "\n";
+#mark duplicates
 print "java -Xmx40g -jar $picard MarkDuplicates INPUT=$merged_bam OUTPUT=$marked_merged_bam METRICS_FILE=$metrix_file_across_lanes MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000";
 print "\n";
+#index BAM files
 print "java -Xmx40g -jar $picard BuildBamIndex INPUT=$marked_merged_bam OUTPUT=$marked_merged_bam_index";
 print "\n";
+#indel realignment
 print "java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T RealignerTargetCreator -R $GalGal5_Ref -I $marked_merged_bam -o $Intervals_across_lanes" ;
 print "\n";
 print "java -Xmx40g -cp $gatk -jar $gatk/GenomeAnalysisTK.jar -T IndelRealigner -R $GalGal5_Ref -I $marked_merged_bam -targetIntervals $Intervals_across_lanes -o $Dedupped_realigned_merged_BAM";
 print "\n";
+#index BAM files
 print "java -Xmx40g -jar $picard BuildBamIndex  INPUT=$Dedupped_realigned_merged_BAM OUTPUT=$Dedupped_realigned_merged_BAM_index";
 print "\n";
+
