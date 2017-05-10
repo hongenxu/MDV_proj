@@ -10,9 +10,11 @@
 ### Explanations
 
 * Config.txt 
+
 required for running fastq2bam.pl
 
 * fastq2bam.pl 
+
 main script 
 
 * submit2.pl
