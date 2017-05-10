@@ -9,7 +9,7 @@
 
 ### Explanations
 
-* Config.txt 
+* config.txt 
 
 required for running fastq2bam.pl
 
@@ -17,7 +17,7 @@ required for running fastq2bam.pl
 
 main script 
 
-* submit2.pl
+* submit.pl
 
 running fastq2bam.pl and submit the job to computer cluster
 
