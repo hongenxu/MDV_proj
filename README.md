@@ -31,10 +31,10 @@ We used SomaticSeq to identify somatic SNVs and Indels because SomaticSeq placed
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/somatic_snv_indel)
 
 ## Identify somatic SCNAs
-* [Details](somatic_scna/README.md)
+* [Details](https://github.com/hongenxu/MDV_proj/tree/master/somatic_scna)
 
 ## Identify somatic SVs
-* [Details](somatic_sv/README.md)
+* [Details](https://github.com/hongenxu/MDV_proj/tree/master/somatic_sv)
 
 ## Identify somatic SNVs and Indels from RNAseq data
 * [Details](RNAseq/README.md)
