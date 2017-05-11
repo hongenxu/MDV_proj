@@ -6,7 +6,7 @@
 1. Control-FREEC
 * Version: 9.8b
 * From: https://github.com/BoevaLab/FREEC/releases
-* Notes: See [get_mappability_of_galgal5.sh](https://github.com/hongenxu/MDV_proj/blob/master/somatic_scna/get_mappability_of_galgal5.sh) and [rename_mappability.pl](https://github.com/hongenxu/MDV_proj/blob/master/somatic_scna/rename_mappability.pl) for details how to create mappability file used for Control-FREEC.
+* Notes: See [get_mappability_of_galgal5.sh](https://github.com/hongenxu/MDV_proj/blob/master/somatic_scna/get_mappability_of_galgal5.sh) and [rename_mappability.pl](https://github.com/hongenxu/MDV_proj/blob/master/somatic_scna/rename_mappability.pl) for details how to create mappability file used for Control-FREEC; See [create_files_for_FREEC.sh](https://github.com/hongenxu/MDV_proj/blob/master/somatic_scna/create_files_for_FREEC.sh) for details for generating files required by running Control-FREEC
 
 2. copyCat
 * Version: 1.6.11
