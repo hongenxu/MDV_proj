@@ -4,12 +4,12 @@ use strict;
 use warnings;
 
 
-###configuration
+###software locations and required files
 my $freec="/home/users/xu/FREEC-9.8b";
 my $tumor_dir="/home/proj/MDW_genomics/xu/final_bam/";
 my $normal_dir="/home/proj/MDW_genomics/xu/final_bam/";
 my $output_dir="/scratch/xu/MDV_project/freec_results";
-my $assess="/home/users/xu/FREEC-9.8b/scripts/assess_significance.R";
+my $assess="/home/users/xu/FREEC-9.8b/scripts/assess_significance.R";#included in control-freec package
 my $ref="/home/proj/MDW_genomics/xu/scna/freec/galgal5.fa";
 my $regions="/home/proj/MDW_genomics/xu/scna/freec/bedfile4Control-freec.bed";
 
