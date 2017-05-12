@@ -156,7 +156,7 @@ foreach my $lane (@lanes){
 	my $bwa_in_singles_PE=$sic_out_singles_PE;
 	my $bwa_in_singles_SE=$sic_out_singles_SE;##will not be used due to failure to pass fastqc
 	my $bwa_out_sam=join("",$bwa_output,$new_sample,"_",$lane,"_","Bwa_NRG_Yet.sam");
-    my $cmd5="$bwa mem -t 5 -T 20 $reference $bwa_in_R1 $bwa_in_R2 >$bwa_out_sam";
+    my $cmd5="$bwa mem -t 4 -T 20 $reference $bwa_in_R1 $bwa_in_R2 >$bwa_out_sam";
 
 	print "$cmd5\n";
 
