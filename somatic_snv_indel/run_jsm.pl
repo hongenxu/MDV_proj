@@ -29,9 +29,10 @@ foreach my $num (0..25){
     #for sample 798-1_S5,change --convergence_threshold from default value (0.000001) to 0.01 see README.md file in the same directory for details
     #my $cmd1="$jsm train joint_snv_mix_two --min_normal_depth 8 --min_tumour_depth 6 --convergence_threshold 0.01 $genome $normal_bam $tumor_bam $config/joint_priors.cfg $config/joint_params.cfg $output_dir/$sample.cfg ";
     my $cmd1="$jsm train joint_snv_mix_two --min_normal_depth 8 --min_tumour_depth 6 --convergence_threshold 0.000001 $genome $normal_bam $tumor_bam $config/joint_priors.cfg $config/joint_params.cfg $output_dir/$sample.cfg ";
-    open OUT, ">$sample.jsm.job" or die $!;
     my $cmd2="$jsm classify joint_snv_mix_two $genome $normal_bam $tumor_bam $output_dir/$sample.cfg $output_dir/$sample.tsv";
     my $cmd3=qq(awk -F \"\\t\" 'NR!=1 && \$4!="N" && \$10+\$11>=0.95' $output_dir/$sample.tsv >$output_dir/$sample.filtered.tsv);#filtering to reduce file size
+    system "cp ~/template.sh $sample.jsm.job";
+    open OUT, ">>$sample.jsm.job" or die $!;
     print OUT "$cmd1\n$cmd2\n$cmd3\n";
     close OUT;
     #them qsub $sample.jsm.job to the cluster
