@@ -36,6 +36,7 @@ foreach my $num (0..25){
     print OUT "$cmd1\n$cmd2\n$cmd3\n";
     close OUT;
     #them qsub $sample.jsm.job to the cluster
+    #`qsub -b y -q all.q -l vf=8G,core=1 -N "jsm$sample" "sh ./$sample.jsm.job"`;
 }
 
 
