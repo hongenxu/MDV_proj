@@ -11,7 +11,7 @@
      MuSE sump -I Output.Prefix.MuSE.txt -G –O Output.Prefix.vcf –D dbsnp.vcf.gz
  ```
   * Filtering: No
-  * Notes:     dbSNP VCF (Galgal5 version) was used, and see dbSNP_liftover step for details    
+  * Notes:     dbSNP VCF (Galgal4 version liftover to galgal5) was used, and see dbSNP_liftover of Prerequisite files for details    
 2. MuTect
   * Version:   MuTect-1.1.7, built from source
   * From:      https://github.com/broadinstitute/mutect
