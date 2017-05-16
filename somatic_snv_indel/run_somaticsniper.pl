@@ -38,10 +38,11 @@ foreach my $num (0..25){
     my $cmd4="perl $preparerc --snp-file $output_dir/$sample.filtered.vcf --out-file $output_dir/$sample.pos";
     my $cmd5="$readcount -b 15 -q 1 -f $genome -l $output_dir/$sample.pos $tumor_bam >$output_dir/$sample.rc";
     my $cmd6="perl $fpfilter --snp-file $output_dir/$sample.filtered.vcf --readcount-file $output_dir/$sample.rc";
-
-    print "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
-
-
+    system "cp ~/template.sh $sample.ss.job";
+    open OUT ">>$sample.ss.job";
+    print OUT "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
+    close OUT;
+    #`qsub -b y -q all.q -l vf=8G,core=1 -N "ms$sample" "sh ./$sample.ss.job"`;
 }
 
 
