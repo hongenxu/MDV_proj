@@ -10,7 +10,7 @@ my $tumor_dir="/home/proj/MDW_genomics/xu/final_bam/";
 my $normal_dir="/home/proj/MDW_genomics/xu/final_bam/";
 my $output_dir="/scratch/xu/MDV_project/muse_results";
 my $genome="/home/proj/MDW_genomics/xu/galgal5/galgal5.fa";
-my $dbsnp="/scratch/xu/MDV_project/muse_results/dbSNP.galgal5.vcf.gz";
+my $dbsnp="/home/proj/MDW_genomics/xu/dbSNP/dbSNP.galgal5.vcf.gz";
 ##sample identifiers
 #the first tumor matched the first normal....
 my @tumors=("738-1_S1","741-1_S2","756-3_S3","766-1_S4","798-1_S5","833-1_S6","834-2_S7","855-1_S8","863-1_S9","918-3_S10","927-2_S11","834-2_2_S12","911-1_2_S13","777-3_S14","787-2_S15","788-1_S16","794-1_S17","835-1_S18","841-3_S19","842-2_S20","884-2_S21","901-2_S22","906-1_S23","911-1_S24","842-2_2_S25","901-2_2_S26");
@@ -25,11 +25,13 @@ foreach my $num (0..25){
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
     my $cmd1="$muse call -f $genome  -O $output_dir/$sample $tumor_bam $normal_bam";
-    print "$cmd1\n";
-    #`qsub -b y -q all.q -l vf=8G,core=1 -N "mscall$sample" "$cmd1"`;
     my $cmd2="$muse sump -I $output_dir/$sample.MuSE.txt -G -D $dbsnp -O $output_dir/$sample.vcf";
-    print "$cmd2\n";
-    #`qsub -b y -q all.q -l vf=8G,core=1 -N "mssump$sample" "$cmd2"`;
+    system "cp ~/template.sh ./$sample.sh";
+    open OUT, ">>./$sample.sh";
+    print OUT "$cmd1\n";
+    print OUT "$cmd2\n";
+    close OUT;
+    #`qsub -b y -q all.q -l vf=8G,core=1 -N "muse$sample" "sh ./$sample.sh"`;
 }
 
 
