@@ -24,15 +24,14 @@ foreach my $num (1..25){
     die "$normal_bam not exists\n" if ! -e $normal_bam;
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
-    my $cmd1_1="$lofreq indelqual --dindel -f $genome -o $output_dir/$tumors[$num].tumor.bam $tumor_bam";
-    my $cmd1_2="$lofreq indelqual --dindel -f $genome -o $output_dir/$normals[$num].normal.bam $normal_bam";
-    my $cmd1_3="$lofreq somatic -n $output_dir/$normals[$num].normal.bam  -t $output_dir/$tumors[$num].tumor.bam -f $genome -o $output_dir/$sample\_ -d $dbsnp --threads 4 --call-indels --min-cov 6";
-    print "$cmd1_1\n";
-    print "$cmd1_2\n";
-    print "$cmd1_3\n";
-    #`qsub -b y -q lofn.q -l vf=12G,core=1 -N "bqsr$sample"  "$cmd1_1" `;
-    #`qsub -b y -q lofn.q -l vf=12G,core=1 -N "bqsr$sample"  "$cmd1_2" `;
-    #`qsub -b y -q lofn.q -l vf=16G,core=4 -N "lofreq$sample" "$cmd1_3"`;
+    my $cmd1="$lofreq indelqual --dindel -f $genome -o $output_dir/$tumors[$num].tumor.bam $tumor_bam";
+    my $cmd2="$lofreq indelqual --dindel -f $genome -o $output_dir/$normals[$num].normal.bam $normal_bam";
+    my $cmd3="$lofreq somatic -n $output_dir/$normals[$num].normal.bam  -t $output_dir/$tumors[$num].tumor.bam -f $genome -o $output_dir/$sample\_ -d $dbsnp --threads 4 --call-indels --min-cov 6";
+    system "cp ~/template.sh $sample.lofreq.job";
+    open OUT,">>$sample.lofreq.job" or die $!;
+    print OUT "$cmd1\n$cmd2\n$cmd3\n";
+    close OUT;
+    #`qsub -b y -q lofn.q -l vf=16G,core=4 -N "lofreq$sample" "sh $sample.lofreq.job"`;
 }
 
 
