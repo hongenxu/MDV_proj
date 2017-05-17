@@ -26,7 +26,7 @@ foreach my $num (0..25){
     my $sample=$1;
     my $cmd="java -jar $indelocator --analysis_type IndelGenotyperV2 --somatic  --reference_sequence $genome --input_file:tumor $tumor_bam --input_file:normal $normal_bam --out  $output_dir/$sample.vcf ";
     print "$cmd\n";
-    #`qsub -b y -q lofn-10g.q -l core=1 -N "indel_$sample" "$cmd"`;
+    #`qsub -b y -q all.q -l core=1 -N "indel_$sample" "$cmd"`;
 }
 
 
