@@ -8,7 +8,7 @@ use warnings;
 #https://github.com/AstraZeneca-NGS/VarDict/issues/2
 #here explains why vardict needs input bed files and bed regions
 #recommended to have 150 bp overlap for WGS data to call indels
-#bed file cand be found in /home/users/xu/VarDict-1.4.4/bin
+#bed file can be found in /home/users/xu/VarDict-1.4.4/bin
 #totally 31 bed files
 
 ###configuration
@@ -33,7 +33,7 @@ foreach my $num (0..25){
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
     foreach my $item (1..31){
-        #see vardict website for explanitions for each parameter
+        #see vardict website for explanations for each parameter
         my $cmd1="$vardict/VarDict -G $genome -b \"$tumor_bam\|$normal_bam\" -th 4 -F 0x500 -z -C -c 1 -S 2 -E 3 -g 4 $vardict/$item.bed  > $output_dir/$sample.vardict.$item";
         #`qsub -b y -q all.q -l core=4 -N "$sample.$item" "$cmd1"`;
         my $cmd2="cat $output_dir/$sample.vardict.$item |Rscript $vardict/testsomatic.R |perl $vardict/var2vcf_paired.pl -f 0.01 >$output_dir/$sample.vcf.$item";
