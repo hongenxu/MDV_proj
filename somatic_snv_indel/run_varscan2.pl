@@ -52,14 +52,19 @@ foreach my $num (0..25){
     #my $cmd11="java -jar $varscan2 fpfilter $output_dir/$sample.indel.LOH.hc.vcf      $output_dir/$sample.indel.loh.rc      --output-file $output_dir/$sample.indel.LOH.hc.filtered.vcf";
     #my $cmd12="java -jar $varscan2 fpfilter $output_dir/$sample.indel.Somatic.hc.vcf  $output_dir/$sample.indel.somatic.rc  --output-file $output_dir/$sample.indel.Somatic.hc.filtered.vcf";
 
-
-    open OUT, ">$sample.varscan2.job" or die $!;
+    system "cp ~/template.sh $sample.varscan2.job";
+    open OUT, ">>$sample.varscan2.job" or die $!;
     print OUT "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
     #print OUT "$cmd7_1\n$cmd7_2\n$cmd7_3\n$cmd7_4\n";
     #print OUT "$cmd8_1\n$cmd8_2\n$cmd8_3\n$cmd8_4\n";
     #print OUT "$cmd9\n$cmd10\n$cmd11\n$cmd12\n";
     close OUT;
     #then qsub $sample.varscan2.job to the cluster
+    #`qsub -b y -q all.q  -N "varscan2$sample" "sh $sample.varscan2.job"`;
 }
+
+
+
+
 
 
