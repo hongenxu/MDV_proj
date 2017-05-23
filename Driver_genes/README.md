@@ -1,7 +1,7 @@
 
 ## Identify driver genes from mutations
 Most of tools were designed specifically for human cancers or need external input only available for human.
-We used the Mutational Significance In Cancer (MuSiC) tool to identify driver genes. 
+We managed to use three tools of different strategies to identify driver genes.
 
 
 1. MuSiC
