@@ -17,7 +17,7 @@ We managed to use three tools of different strategies to identify driver genes.
   * Usage:        see the script for details
 
 3. MUFFINN
-  * Version:      version 2015.10.20
+  * Version:      version 1.0.0
   * From:         http://www.inetbio.org/muffinn/
-  * Installation: running online
-  * Usage:        see the script for details for preparing files required running MUFFINN online
+  * Installation: /http://github.com/netbiolab/MUFFINN
+  * Usage:        see the script for details for preparing files required running MUFFINN
