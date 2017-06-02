@@ -41,7 +41,7 @@ foreach my $num (0..25){
         print JOB "$cmd3\n";
     }
     close JOB;
-    #qsub -b y -q all.q -l vf=4G -N "delly$sample" "sh $sample.delly.job";
+    #`qsub -b y -q all.q -l vf=4G -N "delly$sample" "sh $sample.delly.job"`;
 }
 
 
