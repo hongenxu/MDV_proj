@@ -32,9 +32,7 @@ foreach my $num (0..12,14..25){ ##sample S14 was not included due to failling in
     }
     system "cp ~/template.sh ./$sample.breakdancer.job";
     open JOB, ">>$sample.breakdancer.job"  or die $!;
-    #`qsub -b y -q all.q -l vf=4G -N "$sample.diii"
     my $cmd1="$breakdancer_max $output_dir/$sample.cfg  >$output_dir/$sample.diii";
-    #`qsub -b y -q all.q -l vf=4G -N "$sample.ctx"
     my $cmd2="$breakdancer_max  -t  $output_dir/$sample.cfg  >$output_dir/$sample.ctx";
 
     my ($t_name, $t_dir, $t_suffix) = fileparse($tumor_bam,".bam");
@@ -44,6 +42,7 @@ foreach my $num (0..12,14..25){ ##sample S14 was not included due to failling in
     my $cmd4="grep -v $n_name $output_dir/$sample.ctx >$output_dir/$sample.ctx.filtered";
     print JOB "$cmd1\n$cmd2\n$cmd3\n$cmd4\n";
     close JOB;
+    #`qsub -b y -q all.q -l vf=4G -N "bd$sample" "sh $sample.breakdancer.job";
 
 }
 
