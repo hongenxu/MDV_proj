@@ -28,7 +28,7 @@ foreach my $num (0..12,14..25){ ##sample S14 was not included due to failling in
     my $test=&quality_control("$output_dir/$sample.cfg");
     if ($test==0){
         print "$sample"," failed in quality control\n";
-        die;
+        #die;
     }
     system "cp ~/template.sh ./$sample.breakdancer.job";
     open JOB, ">>$sample.breakdancer.job"  or die $!;
@@ -37,10 +37,12 @@ foreach my $num (0..12,14..25){ ##sample S14 was not included due to failling in
 
     my ($t_name, $t_dir, $t_suffix) = fileparse($tumor_bam,".bam");
     my ($n_name, $n_dir, $n_suffix) = fileparse($normal_bam,".bam");
+    my $cmd3=qq(grep "^#" $output_dir/$sample.diii >$output_dir/$sample.diii.filtered);
+    my $cmd4=qq(grep  -v $n_name  $output_dir/$sample.diii |grep -v "^#" >>$output_dir/$sample.diii.filtered);
+    my $cmd5=qq(grep "^#" $output_dir/$sample.ctx >$output_dir/$sample.ctx.filtered);
+    my $cmd6=qq(grep  -v $n_name  $output_dir/$sample.ctx  |grep -v "^#" >>$output_dir/$sample.ctx.filtered);
 
-    my $cmd3="grep -v $n_name $output_dir/$sample.diii >$output_dir/$sample.diii.filtered";
-    my $cmd4="grep -v $n_name $output_dir/$sample.ctx >$output_dir/$sample.ctx.filtered";
-    print JOB "$cmd1\n$cmd2\n$cmd3\n$cmd4\n";
+    print JOB "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
     close JOB;
     #`qsub -b y -q all.q -l vf=4G -N "bd$sample" "sh $sample.breakdancer.job";
 
