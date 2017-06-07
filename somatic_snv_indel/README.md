@@ -132,4 +132,13 @@
   * Filtering: No
   * Notes:     indel qualities were added using ```lofreq indelqual --dindel```
 
+### post-processing pipeline SomaticSeq
+
+1. Model tranning
+    * SomaticSeq version: 2.0.2
+    * See somaticseq4training.pl for details
+2. Model prediction
+    * SomaticSeq version: 2.1.2
+    * See somaticseq4prediction.pl for details
+
 
