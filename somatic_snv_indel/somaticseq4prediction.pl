@@ -6,6 +6,9 @@
 #        USAGE:  ./somaticseq.pl
 #
 #  DESCRIPTION:  used for model prediction
+#                please note that the final model prediction step WAS NOT USED;
+#                used for join all SNV calls by multiple callers
+#                used for join all indel calls by multiple callers
 #
 # REQUIREMENTS:  ---
 #        NOTES:  ---
