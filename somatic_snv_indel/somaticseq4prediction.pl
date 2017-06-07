@@ -1,9 +1,9 @@
 #/usr/bin/perl
 #===============================================================================
 #
-#         FILE:  somaticseq.pl
+#         FILE:  ./somaticseq4prediction.pl
 #
-#        USAGE:  ./somaticseq.pl
+#        USAGE:  ./somaticseq4prediction.pl
 #
 #  DESCRIPTION:  used for model prediction
 #                please note that the final model prediction step WAS NOT USED;
