@@ -141,4 +141,16 @@
     * SomaticSeq version: 2.1.2
     * See somaticseq4prediction.pl for details
 
-
+### Mapping-free mutation calling
+1. SMuFin
+    * Version: 0.9.3_mpi_beta
+    * From:    http://cg.bsc.es/smufin/
+    * Usage:
+    ```
+     mpirun --np 2 smufin --ref genome --normal_fastq_1 normal_fastqs_1.sample.txt \
+                                       --normal_fastq_2 normal_fastqs_2.sample.txt \
+                                       --tumor_fastq_1 tumor_fastqs_1.sample.txt   \
+                                       --tumor_fastq_2 tumor_fastqs_2.sample.txt  \
+                                       --patient_id sample  --cpus_per_node 1
+    ```
+    * Notes: See run_smufin.pl for details
