@@ -1,11 +1,29 @@
 
 ### SCNAs
 
-software       type of mutation
-copyCat        CN gain; CN loss
-Control-FREEC  CN gain; CN loss; LOH
-genoCN         CN gain; CN loss; LOH
-ASCAT          CN gain; CN loss; LOH
+<table>
+    <tr>
+        <th>software</th>
+        <th>type of mutation</th>
+    </tr>
+    <tr>
+        <td>copyCat</td>
+        <td>CN gain; CN loss</td>
+    </tr>
+    <tr>
+            <td>Control-FREEC</td>
+            <td>CN gain; CN loss; LOH</td>
+    </tr>
+    <tr>
+            <td>genoCN</td>
+            <td>CN gain; CN loss; LOH</td>
+    </tr>
+    <tr>
+            <td>ASCAT</td>
+            <td>CN gain; CN loss; LOH</td>
+    </tr>
+
+</table>
 
 
 #### NGS data
