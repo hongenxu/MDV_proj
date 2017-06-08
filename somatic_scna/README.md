@@ -40,6 +40,12 @@
 chicken GC and mappability files were created by following the [link](https://xfer.genome.wustl.edu/gxfer1/project/cancer-genomics/readDepth/createCustomAnnotations.v1.tar.gz);
 copycat.R was executed by run_copycat.pl.
 
+3. post-processing
+* summarize results from copyCat, see sum_copycat_results.pl for details;
+* summarize results from Control-FREEC, see sum_freec_results.pl for details; 
+* compare CN gain and loss by copyCat and Control-FREEC, see cmp_controlfreec_copycat.sh for details
+
+
 #### Microarray data
 
 1. PennCNV-Affy
