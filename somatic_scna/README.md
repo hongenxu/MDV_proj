@@ -47,11 +47,13 @@ chicken GC and mappability files were created by following the [link](https://xf
 
 
 #### Microarray data
+0. preprocessing
+* copy CEL file and rename, see `copy_rename_microarray.pl` for details
 
 1. PennCNV-Affy
 * Version: Not Available 
 * From: http://www.openbioinformatics.org/penncnv/download/gw6.tar.gz
-* Notes: only for preprocessing CEL data to LRR and BAF
+* Notes: only for preprocessing CEL data to LRR and BAF; 
 
 2. PennCNV
 * Version: 1.0.4
