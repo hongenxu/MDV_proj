@@ -1,6 +1,13 @@
 
 ### SCNAs
 
+software       type of mutation
+copyCat        CN gain; CN loss
+Control-FREEC  CN gain; CN loss; LOH
+genoCN         CN gain; CN loss; LOH
+ASCAT          CN gain; CN loss; LOH
+
+
 #### NGS data
 
 1. Control-FREEC
@@ -25,7 +32,7 @@ copycat.R was executed by run_copycat.pl.
 2. PennCNV
 * Version: 1.0.4
 * From: https://github.com/WGLab/PennCNV/releases
-* Notes: for creating Population Frequency of B allele (PFB) file using 8 F1 control birds
+* Notes: for creating Population Frequency of B allele (PFB) file using 6 F1 control birds
 
 3. genoCN
 * Version: 1.26.0
@@ -35,4 +42,4 @@ copycat.R was executed by run_copycat.pl.
 4. ASCAT
 * Version: 2.4.3
 * From: https://github.com/Crick-CancerGenomics/ascat
-* Notes: 
+* Notes:
