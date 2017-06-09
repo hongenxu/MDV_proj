@@ -28,17 +28,15 @@ foreach my $num (0..25){
     system "cp ~/template.sh $sample.delly.job";
     open JOB, ">>$sample.delly.job" or die $!;
     foreach my $sv_type (@sv_types){
-		my $output_file=join("",$output_dir,$sample,".",$sv_type,".","vcf.gz");
-
+        my $output_file=join("",$output_dir,$sample,".",$sv_type,".","vcf.gz");
         my $cmd1="$delly -t $sv_type -o $output_file -g $genome $tumor_bam $normal_bam";
-		my $cmd2="gunzip $output_file";
-        print JOB "$cmd1\n$cmd2\n";
-		my ($tname, $tdir, $tsuffix) = fileparse($tumor_bam,".bam");
-		my ($nname, $ndir, $nsuffix) = fileparse($normal_bam,".bam");
-		my $filter_in=join("",$output_dir,$sample,".",$sv_type,".","vcf");
-		my $filter_out=join("",$output_dir,$sample,".",$sv_type,".","vcf.out");
-		my $cmd3="python2.7 /home/users/xu/delly/variantFiltering/somaticVariants/somaticFilter.py -v $filter_in -o $filter_out -m 400 -a 0.1  -r 0.75 -t $sv_type -f  -N $nname -T $tname ";
-        print JOB "$cmd3\n";
+        my $cmd2="gunzip $output_file";
+        my ($tname, $tdir, $tsuffix) = fileparse($tumor_bam,".bam");
+        my ($nname, $ndir, $nsuffix) = fileparse($normal_bam,".bam");
+        my $filter_in=join("",$output_dir,$sample,".",$sv_type,".","vcf");
+        my $filter_out=join("",$output_dir,$sample,".",$sv_type,".","vcf.out");
+        my $cmd3="python2.7 /home/users/xu/delly/variantFiltering/somaticVariants/somaticFilter.py -v $filter_in -o $filter_out -m 400 -a 0.1  -r 0.75 -t $sv_type -f  -N $nname -T $tname ";
+        print JOB "$cmd1\n$cmd2\n$cmd3\n";
     }
     close JOB;
     #`qsub -b y -q all.q -l vf=4G -N "delly$sample" "sh $sample.delly.job"`;
