@@ -51,34 +51,33 @@ foreach my $num (0..12,14..25){ ##sample S14 was not included due to failling in
 ##################################################################
 
 sub quality_control {
-	my $file=shift(@_);
-	my $flag=1;
-	open CFG, "$file" or die $!;
+    my $file=shift(@_);
+    my $flag=1;
+    open CFG, "$file" or die $!;
 
-	while (<CFG>){
-		chomp;
-		my @elements=split/\t/,$_;
-		my $rg=$elements[0];
-		$rg=~/readgroup:(.*)/;
-		$rg=$1;
-		my $mean=$elements[8];
-		$mean=~/mean\:(.*)/;
-		$mean=$1;
-		my $std=$elements[9];
-		$std=~/std\:(.*)/;
-		$std=$1;
-		my $cov=$std/$mean; #coefficient of variation (standard deviation divided by mean)
-		my $ctx=0; #initialization in case no 32 flag
-		$ctx=$1 if $_=~/\)32\((\S+?)\)/;
-		$ctx=~s/\%//;
-		if ($rg ne "NA" and $cov<0.3 and $ctx<3 ) {
-			$flag=1;
-
-		}
-		else {
-		    $flag=0;
-		    print "$rg\t$cov\t$ctx\n";
-	    }
+    while (<CFG>){
+        chomp;
+        my @elements=split/\t/,$_;
+        my $rg=$elements[0];
+        $rg=~/readgroup:(.*)/;
+        $rg=$1;
+        my $mean=$elements[8];
+        $mean=~/mean\:(.*)/;
+        $mean=$1;
+        my $std=$elements[9];
+        $std=~/std\:(.*)/;
+        $std=$1;
+        my $cov=$std/$mean; #coefficient of variation (standard deviation divided by mean)
+        my $ctx=0; #initialization in case no 32 flag
+        $ctx=$1 if $_=~/\)32\((\S+?)\)/;
+        $ctx=~s/\%//;
+        if ($rg ne "NA" and $cov<0.3 and $ctx<3 ) {
+            $flag=1;
+        }
+        else {
+            $flag=0;
+            print "$rg\t$cov\t$ctx\n";
+        }
 
     }
     close CFG;
