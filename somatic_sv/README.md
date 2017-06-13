@@ -2,7 +2,7 @@
 ### SVs
 1. Breakdancer
 
-* Version: breakdancer-max1.4.3
+* Version: breakdancer-max1.4.5
 * From:    https://github.com/genome/breakdancer
 * Notes:   tumor sample S14 not included due to failing in quality check; filter out SV calls support by less than 5, see `run_breakdancer.pl` for details
 
