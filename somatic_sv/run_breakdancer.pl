@@ -44,7 +44,7 @@ foreach my $num (0..12,14..25){ ##sample S14 was not included due to failling in
 
     print JOB "$cmd1\n$cmd2\n$cmd3\n$cmd4\n$cmd5\n$cmd6\n";
     close JOB;
-    #`qsub -b y -q all.q -l vf=4G -N "bd$sample" "sh $sample.breakdancer.job";
+    #`qsub -b y -q all.q -l vf=4G -N "bd$sample" "sh $sample.breakdancer.job"`;
 
 }
 
