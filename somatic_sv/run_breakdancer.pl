@@ -4,6 +4,38 @@ use strict;
 use warnings;
 use File::Basename;
 
+########installation of breakdancer
+#below is from the install file of breakdancer
+# --recrusive option is important so that it gets the submodules too
+#     $ git clone --recursive https://github.com/genome/breakdancer.git
+#     $ cd breakdancer
+#     $ mkdir build
+#     $ cd build
+#
+#     $ wget "http://downloads.sourceforge.net/project/samtools/samtools/0.1.19/samtools-0.1.19.tar.bz2"
+#     $ tar -jxvf samtools-0.1.19.tar.bz2
+#     $ cd samtools-0.1.19
+#     $ make
+#     $ export SAMTOOLS_ROOT=$(pwd)
+#     $ cd ..
+#     $ cmake .. -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=/usr/local
+#     $ make
+#     $ sudo make install
+
+
+#please also install depending PERL modules, please consider install "cpanm" first, and you can install the following
+#modules easily, e.g., cpanm install Math::CDF
+#Statistics::Descriptive
+#GD::Graph
+#Math::CDF
+
+#the filtering steps (i.e., $cmd4, $mcd6) are based on "basic protocol 2" in a paper,
+#BreakDancer: Identification of Genomic Structural Variation from Paired-End Read Mapping
+#PMID:25152801
+
+#the quality control steps are based on "support protocol 3" in the above paper
+
+
 ### configuration
 ## bam2cfg - generate analysis configure files for breakdancer_max
 my $bam2cfg="/home/users/xu/local/lib/breakdancer-max1.4.3/bam2cfg.pl";
