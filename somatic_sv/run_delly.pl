@@ -2,7 +2,9 @@
 
 use strict;
 use warnings;
-use File::Basename;
+
+#the filtering step (i.e.,$cmd3) using a script "somaticFilter.py" included in delly package
+
 
 ###configuration
 my $delly="/home/users/xu/delly/src/delly";
