@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 #the filtering step (i.e.,$cmd3) using a script "somaticFilter.py" included in delly package
-
+#was based on https://www.synapse.org/#!Synapse:syn2341785/wiki/64531
 
 ###configuration
 my $delly="/home/users/xu/delly/src/delly";
