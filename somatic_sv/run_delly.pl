@@ -5,6 +5,10 @@ use warnings;
 
 #the filtering step (i.e.,$cmd3) using a script "somaticFilter.py" included in delly package
 #was based on https://www.synapse.org/#!Synapse:syn2341785/wiki/64531
+#you may need to install "banyan", and "PyVCF" to get "somaticFilter.py" running
+#pip install banyan;
+#pip install PyVCF
+
 
 ###configuration
 my $delly="/home/users/xu/delly/src/delly";
@@ -26,7 +30,7 @@ foreach my $num (0..25){
 
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
-    my @sv_types=("DEL","DUP","INV","TRA");
+    my @sv_types=("DEL","DUP","INV","TRA");#INS (small insertions) was not included, refer to indel identification
     system "cp ~/template.sh $sample.delly.job";
     open JOB, ">>$sample.delly.job" or die $!;
     foreach my $sv_type (@sv_types){
@@ -37,7 +41,7 @@ foreach my $num (0..25){
         my ($nname, $ndir, $nsuffix) = fileparse($normal_bam,".bam");
         my $filter_in=join("",$output_dir,$sample,".",$sv_type,".","vcf");
         my $filter_out=join("",$output_dir,$sample,".",$sv_type,".","vcf.out");
-        my $cmd3="python2.7 /home/users/xu/delly/variantFiltering/somaticVariants/somaticFilter.py -v $filter_in -o $filter_out -m 400 -a 0.1  -r 0.75 -t $sv_type -f  -N $nname -T $tname ";
+        my $cmd3="python2.7 /home/users/xu/delly/variantFiltering/somaticVariants/somaticFilter.py -v $filter_in -o $filter_out -m 400 -a 0.1 -r 0.75 -c 10 -t $sv_type -f  -N $nname -T $tname ";
         print JOB "$cmd1\n$cmd2\n$cmd3\n";
     }
     close JOB;
