@@ -1,10 +1,11 @@
-#!/usr/bin/perl
+i#!/usr/bin/perl
 
 use strict;
 use warnings;
 
 #the filtering step (i.e.,$cmd3) using a script "somaticFilter.py" included in delly package
-#parameters were based on https://www.synapse.org/#!Synapse:syn2341785/wiki/64531
+#parameters setting for "somaticFilter.py" were based on https://www.synapse.org/#!Synapse:syn2341785/wiki/64531
+#use "python somaticFilter.py -h" for the explanation for the meanings of those parameters
 #you may need to install python modules "banyan", and "PyVCF" to get "somaticFilter.py" running
 #pip install banyan;
 #pip install PyVCF
