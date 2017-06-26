@@ -68,7 +68,7 @@ chicken GC and mappability files were created by following the [link](https://xf
 4. genoCN
 * Version: 1.26.0
 * From: https://www.bioconductor.org/packages/release/bioc/html/genoCN.html
-* Notes:
+* Notes: see `genoCN.R` and `run_genoCN.sh` for details for running genoCN; 
 
 5. ASCAT
 * Version: 2.4.3
