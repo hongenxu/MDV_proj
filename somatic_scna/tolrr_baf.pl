@@ -14,7 +14,6 @@ my @files=<MDV.*>;
 
 foreach my $file (@files){
 
-    `sed -i '/\-\-\-/d' $file`;##delete markers without position information
     `sort  -k2,2 -k3,3 $file -V -s >sorted.$file`;
     open FILE, "sorted.$file" or die $!;
     my ($MDV,$sample)=split/\./,$file;
