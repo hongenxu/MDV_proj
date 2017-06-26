@@ -58,7 +58,7 @@ chicken GC and mappability files were created by following the [link](https://xf
 2. PennCNV
 * Version: 1.0.4
 * From: https://github.com/WGLab/PennCNV/releases
-* Notes: for creating Population Frequency of B allele (PFB) file using 6 F1 control birds
+* Notes: for creating Population Frequency of B allele (PFB) file using 8 samples mixed from 6 control birds, see `prepare_pfb.pl` for details
 
 3. genoCN
 * Version: 1.26.0
