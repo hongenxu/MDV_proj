@@ -60,12 +60,17 @@ chicken GC and mappability files were created by following the [link](https://xf
 * From: https://github.com/WGLab/PennCNV/releases
 * Notes: for creating Population Frequency of B allele (PFB) file using 8 samples mixed from 6 control birds, see `prepare_pfb.pl` for details
 
-3. genoCN
+3. post-processing
+
+* split output files from PennCNV-Affy to LRR and BAF, see `tolrr_baf.pl` for details, the output files will be required by running genoCN and ASCAT
+* join LRR values from samples into a single file, join BAF values from samples into a single file, see `joinlrr_baf.R` for details 
+
+4. genoCN
 * Version: 1.26.0
 * From: https://www.bioconductor.org/packages/release/bioc/html/genoCN.html
 * Notes:
 
-4. ASCAT
+5. ASCAT
 * Version: 2.4.3
 * From: https://github.com/Crick-CancerGenomics/ascat
 * Notes:
