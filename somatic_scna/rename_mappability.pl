@@ -10,6 +10,8 @@
 use strict;
 use warnings;
 
+chdir "/home/proj/MDW_genomics/xu/scna/mappability/";
+
 
 open IN, "galgal5.120mer.mappability" or die $!;
 open OUT, ">galgal5.120mer.renamed.mappability" or die $!;
