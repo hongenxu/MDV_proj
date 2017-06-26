@@ -24,6 +24,7 @@ foreach my $file (@files){
         chomp;
         next if $_=~/^Name/;
         my ($name,$chr,$pos,$lrr,$baf)=split/\t/,$_;
+        $chr=~tr/Z/X/;#rename "Z" to "X"
         print LRR "$name\t$chr\t$pos\t$lrr\n";
         print BAF "$name\t$chr\t$pos\t$baf\n";
     }
