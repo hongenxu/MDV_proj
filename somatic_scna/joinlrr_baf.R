@@ -18,7 +18,7 @@ for (sample in samples){
     list8[[i]]<-data
 }
 
-ndf<-join_all(list8,by=c("snp","chr","pos"),type = "inner") 
+ndf<-join_all(list8,by=c("snp","chr","pos"),type = "full") 
 colnames(ndf)<-c("snp","chr","pos",samples)
 
 avg<-c()
@@ -45,14 +45,14 @@ for (sample in samples){
     i<-i+1
     print(i)
     print(sample)
-    baffile<-paste("/scratch/xu/MDV_project/microarray/lrr_baf/",sample,".BAF",sep="")
+    baffile<-paste(sample,".BAF",sep="")
     data<-read.table(baffile,header = FALSE,col.names=c("snp","chr","pos",sample))
     list72[[i]]<-data
 }
 
 
 
-ndf<-join_all(list72,by=c("snp","chr","pos"),type = "inner") 
+ndf<-join_all(list72,by=c("snp","chr","pos"),type = "full") 
 colnames(ndf)<-c("snp","chr","pos",samples)
 
 write.table(ndf, file = "Tumor_BAF.txt", quote = F, sep = "\t",row.names = F, col.names = T)
@@ -70,14 +70,14 @@ for (sample in samples){
     i<-i+1
     print(i)
     print(sample)
-    baffile<-paste("/scratch/xu/MDV_project/microarray/lrr_baf/",sample,".LRR",sep="")
-    data<-read.table(baffile,header = FALSE,col.names=c("snp","chr","pos",sample))
+    lrrfile<-paste(sample,".LRR",sep="")
+    data<-read.table(lrrfile,header = FALSE,col.names=c("snp","chr","pos",sample))
     
     list8[[i]]<-data
 }
 
 
-ndf<-join_all(list8,by=c("snp","chr","pos"),type = "inner") 
+ndf<-join_all(list8,by=c("snp","chr","pos"),type = "full") 
 colnames(ndf)<-c("snp","chr","pos",samples)
 
 avg<-c()
@@ -108,14 +108,14 @@ for (sample in samples){
     i<-i+1
     print(i)
     print(sample)
-    lrrfile<-paste("/scratch/xu/MDV_project/microarray/lrr_baf/",sample,".LRR",sep="")
+    lrrfile<-paste(sample,".LRR",sep="")
     data<-read.table(lrrfile,header = FALSE,col.names=c("snp","chr","pos",sample))
     list72[[i]]<-data
 }
 
 
 
-ndf<-join_all(list72,by=c("snp","chr","pos"),type = "inner") 
+ndf<-join_all(list72,by=c("snp","chr","pos"),type = "full") 
 colnames(ndf)<-c("snp","chr","pos",samples)
 
 write.table(ndf, file = "Tumor_LRR.txt", quote = F, sep = "\t",row.names = F, col.names = T)
