@@ -62,6 +62,14 @@ gzip snp.vcf  #compress
 
 
 
+
+
+###create a file used in "samtools mpileup", see 'run_control-freec.pl'
+
+grep -v "#" Gallus_gallus.vcf |grep "TSA=SNV" |grep -v "," |awk '{print $1"\t"$2-1"\t"$2}' >bedfile4Control-freec.bed
+
+
+
 ############create a chromosome length file for "chrLenFile" paramter in "config_WGS.txt"
 
 samtools faidx /home/proj/MDW_genomics/xu/galgal5/galgal5.fa
