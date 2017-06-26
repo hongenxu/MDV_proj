@@ -63,7 +63,7 @@ chicken GC and mappability files were created by following the [link](https://xf
 3. post-processing
 
 * split output files from PennCNV-Affy to LRR and BAF, see `tolrr_baf.pl` for details, the output files will be required by running genoCN and ASCAT
-* join LRR values from samples into a single file, join BAF values from samples into a single file, see `joinlrr_baf.R` for details 
+* join LRR values from samples into a single file, join BAF values from samples into a single file, see `joinlrr_baf.R` for details, required additionally by running ASCAT
 
 4. genoCN
 * Version: 1.26.0
