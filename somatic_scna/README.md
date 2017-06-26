@@ -53,7 +53,7 @@ chicken GC and mappability files were created by following the [link](https://xf
 1. PennCNV-Affy
 * Version: Not Available 
 * From: http://www.openbioinformatics.org/penncnv/download/gw6.tar.gz
-* Notes: only for preprocessing CEL data to LRR and BAF; 
+* Notes: only for preprocessing CEL data to LRR and BAF; see `run_penncnv_affy.sh` for details
 
 2. PennCNV
 * Version: 1.0.4
