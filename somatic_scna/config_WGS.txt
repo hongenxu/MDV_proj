@@ -45,7 +45,7 @@ numberOfProcesses = 8
 
 ##If the parameter gemMappabilityFile is not specified, then the fraction of non-N nucleotides per window is used as Mappability.
 
-gemMappabilityFile = /home/proj/MDW_genomics/xu/scna/freec/galgal5.120mer.renamed.mappability
+gemMappabilityFile = /home/proj/MDW_genomics/xu/scna/mappability/galgal5.120mer.renamed.mappability
 
 
 #breakPointType = 4

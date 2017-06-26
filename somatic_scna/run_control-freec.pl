@@ -6,12 +6,12 @@ use warnings;
 
 ###software locations and required files
 my $freec="/home/users/xu/FREEC-9.8b";
-my $tumor_dir="/home/proj/MDW_genomics/xu/final_bam/";
-my $normal_dir="/home/proj/MDW_genomics/xu/final_bam/";
+my $tumor_dir="/home/proj/MDW_genomics/final_bam/";
+my $normal_dir="/home/proj/MDW_genomics/final_bam/";
 my $output_dir="/scratch/xu/MDV_project/freec_results";
 my $assess="/home/users/xu/FREEC-9.8b/scripts/assess_significance.R";#included in control-freec package
-my $ref="/home/proj/MDW_genomics/xu/scna/freec/galgal5.fa";
-my $regions="/home/proj/MDW_genomics/xu/scna/freec/bedfile4Control-freec.bed";
+my $ref="/home/proj/MDW_genomics/xu/scna/freec/galgal5.fa"; #use a chromosome-name renamed referece file
+my $regions="/home/proj/MDW_genomics/xu/scna/freec/bedfile4Control-freec.bed";#a bed file for "samtools mpileup"
 
 
 ##sample identifiers
@@ -24,8 +24,8 @@ my @genders=("ZW","ZZ","ZZ","ZZ","ZZ","ZZ","ZW","ZW","ZZ","ZW","ZW","ZW","ZZ","Z
 foreach my $num (0..25){
     my $tumor_bam=join("",$tumor_dir,$tumors[$num],"_Bwa_RG_dedupped_realigned.bam");
     my $normal_bam=join("",$normal_dir,$normals[$num],"_Bwa_RG_dedupped_realigned.bam");
-    print "$tumor_bam not exists\n" if ! -e $tumor_bam;
-    print "$normal_bam not exists\n" if ! -e $normal_bam;
+    die "$tumor_bam not exists\n" if ! -e $tumor_bam;
+    die "$normal_bam not exists\n" if ! -e $normal_bam;
 
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
@@ -35,7 +35,7 @@ foreach my $num (0..25){
     #print "$gender\n";
     my $tumor_reheader="$output_dir/$sample.tumor.bam";
     my $normal_reheader="$output_dir/$sample.normal.bam";
-    #change BAM file header: Z to X, W to Y
+    #change BAM file header: Z to X, W to Y; add "chr" before chromosome number
     my $cmd1="samtools view -H $tumor_bam  |sed -e 's/SN:W/SN:Y/g' |sed -e 's/SN:Z/SN:X/g' |sed -e 's/SN:/SN:chr/g' |samtools reheader - $tumor_bam >$tumor_reheader ";
     my $cmd2="samtools view -H $normal_bam |sed -e 's/SN:W/SN:Y/g' |sed -e 's/SN:Z/SN:X/g' |sed -e 's/SN:/SN:chr/g' |samtools reheader - $normal_bam >$normal_reheader";
     #create mpileup files used for control-freec
@@ -43,27 +43,33 @@ foreach my $num (0..25){
     my $normal_pileup="$output_dir/$sample.normal.pileup.gz";
     my $cmd3="samtools mpileup -q 1 -f $ref -l $regions $tumor_reheader | gzip >$tumor_pileup";
     my $cmd4="samtools mpileup -q 1 -f $ref -l $regions $normal_reheader| gzip >$normal_pileup";
-    # remove chrY
-    my $cmd5="zcat $tumor_pileup |sed  '/chrY/d' |gzip >/scratch/xu/MDV_project/$sample.tumor.pileup.gz ";
-    my $cmd6="zcat $tumor_pileup |sed  '/chrY/d' |gzip >/scratch/xu/MDV_project/$sample.normal.pileup.gz ";
+    # remove chrY for samples with "XX" chromosomes
+    my $cmd5="";
+    my $cmd6="";
+    $cmd5="zcat $tumor_pileup |sed  '/chrY/d' |gzip >/scratch/xu/MDV_project/$sample.tumor.pileup.gz " if $gender eq "XX";
+    $cmd6="zcat $tumor_pileup |sed  '/chrY/d' |gzip >/scratch/xu/MDV_project/$sample.normal.pileup.gz" if $gender eq "XX";
 
     #create config file
     my $config="~/$sample.config";
     system "cp $freec/config_WGS.txt $config";
+    #edit $config file
     `sed -i 's+mateFile\=sample+mateFile\=$tumor_pileup+g'   $config`;
     `sed -i 's+mateFile\=control+mateFile\=$normal_pileup+g' $config`;
     `sed -i 's+sex\=XY+sex\=$gender+g'  $config`;
+    `sed -i 's/chr.len/chrXX.len/g' $config` if $gender eq "XX";
+    `sed -i 's/snp.vcf.gz/snpXX.vcf.gz/g' $config` if $gender eq "XX";
+
     my $cmd7="cd $output_dir/";
     my $cmd8="$freec/freec -conf $config";
     my $cmd9="cat $assess | R --slave --args $output_dir/$sample.tumor.pileup.gz_CNVs $output_dir/$sample.tumor.pileup.gz_ratio.txt ";
 
-    system "cp ~/template.sh ~/$sample.sh";
-    open OUT, ">>/home/users/xu/$sample.sh" or die $!;
+    system "cp ~/template.sh ~/$sample.freec.sh";
+    open OUT, ">>/home/users/xu/$sample.freec.sh" or die $!;
     print OUT "$cmd1\n$cmd2\n$cmd3\n$cmd4\n";
     print OUT "$cmd5\n$cmd6\n";
     print OUT "$cmd7\n$cmd8\n$cmd9\n";
     close OUT;
-    #`qsub -b y -q all.q -N "freec_$sample" "sh ~/$sample.sh"`;
+    #`qsub -b y -q all.q -N "freec_$sample" "sh ~/$sample.freec.sh"`;
 
 }
 
