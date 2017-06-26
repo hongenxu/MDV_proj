@@ -73,4 +73,5 @@ chicken GC and mappability files were created by following the [link](https://xf
 5. ASCAT
 * Version: 2.4.3
 * From: https://github.com/Crick-CancerGenomics/ascat
-* Notes:
+* Notes: see `ascat.R` for details
+
