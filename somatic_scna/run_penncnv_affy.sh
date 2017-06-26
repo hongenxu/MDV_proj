@@ -43,9 +43,18 @@ ${apt}/apt-probeset-genotype \
 
 
 # preparing loc file used in the next step
-grep -v "#" ${axiom_dir}/Axiom_67MDSNPs_Annotation.csv.r1.txt |cut -d"," -f1,4,5 >locfile.txt
-sed -i 's/"//g' locfile.txt
-sed -i 's/,/\t/g' locfile.txt
+grep -v "#" ${axiom_dir}/Axiom_67MDSNPs_Annotation.csv.r1.txt |cut -d"," -f1,4,5,8,9 >locfile.tmp
+sed -i 's/"//g' locfile.tmp
+sed -i 's/,/\t/g' locfile.tmp
+awk '{print "chr"$2"\t"$3-1"\t"$3"\t"$1"\t"$4"/"$5}' locfile.tmp > locfile.galgal3
+sed -i '/^chrSet/d' locfile.galgal3
+liftOver locfile.galgal3 galGal3ToGalGal5.over.chain.gz locfile.galgal5 locfile.unmapped
+head -n 1 locfile.tmp >locfile.txt
+awk '{print $4"\t"$1"\t"$3}' locfile.galgal5 >> locfile.txt
+sed -i 's/chr//g' locfile.txt
+sed -i '/\_NT\_/d' locfile.txt
+
+
 
 #penncnv-affy
 perl ${affy}/generate_affy_geno_cluster.pl ${wd}/output/AxiomGT1.calls.txt \
