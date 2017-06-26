@@ -49,8 +49,7 @@ sed -i 's/,/\t/g' locfile.tmp
 awk '{print "chr"$2"\t"$3-1"\t"$3"\t"$1"\t"$4"/"$5}' locfile.tmp > locfile.galgal3
 sed -i '/^chrSet/d' locfile.galgal3
 liftOver locfile.galgal3 galGal3ToGalGal5.over.chain.gz locfile.galgal5 locfile.unmapped
-head -n 1 locfile.tmp >locfile.txt
-awk '{print $4"\t"$1"\t"$3}' locfile.galgal5 >> locfile.txt
+awk '{print $4"\t"$1"\t"$3}' locfile.galgal5 > locfile.txt
 sed -i 's/chr//g' locfile.txt
 sed -i '/\_NT\_/d' locfile.txt
 
