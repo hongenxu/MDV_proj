@@ -1,9 +1,6 @@
 library(plyr)
 setwd("/home/proj/MDW_genomics/xu/microarray/lrr_baf/")
 
-
-
-
 ####join normal BAF values
 
 normal<-read.table("../normallistfile")
