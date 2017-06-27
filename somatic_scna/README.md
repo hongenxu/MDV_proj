@@ -37,7 +37,7 @@
 * Version: 1.6.11
 * From:  https://github.com/chrisamiller/copyCat
 * Notes:
-chicken GC and mappability files were created by following the [link](https://xfer.genome.wustl.edu/gxfer1/project/cancer-genomics/readDepth/createCustomAnnotations.v1.tar.gz);
+see `create_files_4_copycat.sh` for details how to generate required files including entrypoints file, gaps file, GC file and mappability file ; chicken GC and mappability files were created by following the [link](https://xfer.genome.wustl.edu/gxfer1/project/cancer-genomics/readDepth/createCustomAnnotations.v1.tar.gz);
 `copycat.R` was executed by `run_copycat.pl`.
 
 3. post-processing
