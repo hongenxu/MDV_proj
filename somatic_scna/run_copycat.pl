@@ -4,6 +4,9 @@ use strict;
 use warnings;
 
 
+
+#require bam-window and samtools installed
+
 ###configuration
 my $bamwindow="/home/users/xu/bam-window/build/bin/bam-window";
 my $tumor_dir="/home/proj/MDW_genomics/xu/final_bam/";
