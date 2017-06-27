@@ -4,6 +4,12 @@
 #the comparision was for gain and loss separately
 #the comparision was for each sample separately
 
+#working directory
+cd /home/proj/MDW_genomics/xu/scna/cmp_2tools/
+
+##copy copycat and control-freec results
+cp /home/proj/MDW_genomics/xu/scna/freec_results/results.freec.txt .
+cp /home/proj/MDW_genomics/xu/scna/copycat_results/results.copycat.txt .
 
 #join the results together 
 awk '{print $0"\t""copycat"}' results.copycat.txt > tmp
