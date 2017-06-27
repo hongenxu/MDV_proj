@@ -21,4 +21,5 @@ rm tmp
 
 ##################create gc and mappability files
 #see /home/proj/MDW_genomics/xu/scna/copycat_anno_galgal5/createCustomAnnotations.v1/ for details
+#downloaded from https://xfer.genome.wustl.edu/gxfer1/project/cancer-genomics/readDepth/createCustomAnnotations.v1.tar.gz
 
