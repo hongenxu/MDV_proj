@@ -1,3 +1,6 @@
+#executed by ./run_copycat.pl
+
+
 
 args<-commandArgs(trailingOnly=T)
 
@@ -11,6 +14,7 @@ library(copyCat)
 
 print(normal_window)
 
+#see readme file in 'annotationDirectory' for details how to generated required files
 runPairedSampleAnalysis(annotationDirectory="/home/proj/MDW_genomics/xu/scna/copycat_anno_galgal5/annotations/",
                     outputDirectory=output_dir,
                     normal=normal_window,
