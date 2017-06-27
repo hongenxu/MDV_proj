@@ -6,6 +6,10 @@
 use strict;
 use warnings;
 
+my $wd="/home/proj/MDW_genomics/xu/scna/freec_results/";
+chdir $wd;
+
+
 open SOMATIC, ">results.freec.txt" or die $!;
 open GERMLINE,">germline.cnv" or die $!;
 

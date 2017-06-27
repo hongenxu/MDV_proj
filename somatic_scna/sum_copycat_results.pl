@@ -5,13 +5,13 @@
 use strict;
 use warnings;
 
+my $wd="/home/proj/MDW_genomics/xu/scna/copycat_results/";
+chdir $wd;
 
-###configuration
-my $bamwindow="/home/users/xu/bam-window/build/bin/bam-window";
-my $tumor_dir="/home/proj/MDW_genomics/xu/final_bam/";
-my $normal_dir="/home/proj/MDW_genomics/xu/final_bam/";
-my $output_dir="/scratch/xu/MDV_project/copycat_results";
-my $reference="/home/proj/MDW_genomics/xu/galgal5/galgal5.fa";
+###copycat raw output files were in this directory
+my $input_dir="/scratch/xu/MDV_project/copycat_results";
+
+
 
 ##sample identifiers
 #the first tumor match the first normal...
@@ -24,7 +24,7 @@ foreach my $num (0..25){
     $tumors[$num]=~/.*(S\d+)/;
     my $sample=$1;
     my $new_sample=$tumors[$num];
-    open RESULT,"$output_dir/$sample/alts.paired.dat" or die $!;
+    open RESULT,"$input_dir/$sample/alts.paired.dat" or die $!;
     while (<RESULT>){
         chomp;
         my ($chr,$start,$end,$a,$copy)=split/\t/,$_;
