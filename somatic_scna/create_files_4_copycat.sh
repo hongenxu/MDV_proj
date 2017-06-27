@@ -1,4 +1,7 @@
 
+wd="/home/proj/MDW_genomics/xu/scna/copycat_anno_galgal5/annotations/"
+cd ${wd}
+
 ################################create gaps.bed file 
 
 #require bedtools installed
@@ -8,15 +11,14 @@ grep -v "#" ucsc_gaps.bed |cut -f2-4,8 >tmp
 sed -i '/_/d' tmp
 sed -i 's/chr//g' tmp
 bedtools sort -i tmp >gaps.bed
-rm tmp 
+rm tmp
 
 #############################create entrypoints.female and entrypoints.male file
 #create manually
 #the first column is chromosome;
 #the second one is length of this chromosome
 #the third one is the number of this chromosme in female or male
-
-
+#see $wd for my files
 
 
 ##################create gc and mappability files
