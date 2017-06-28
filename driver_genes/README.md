@@ -14,7 +14,7 @@ We managed to use three tools of different strategies to identify driver genes.
   * Version:      version 1.0.0
   * From:         https://bitbucket.org/bbglab/oncodriveclust
   * Installation: pip install oncodriveclust
-  * Usage:        see the script for details
+  * Usage:        see `run_oncodriveclust.pl` for details how to generate required input data, run, and extract potential driver genes
 
 3. MUFFINN
   * Version:      version 1.0.0
