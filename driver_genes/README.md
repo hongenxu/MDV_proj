@@ -7,8 +7,8 @@ We managed to use three tools of different strategies to identify driver genes.
 1. MuSiC
   * Version:      version 0.0401
   * From:         http://gmt.genome.wustl.edu/packages/genome-music/index.html
-  * Installation: https://www.biostars.org/p/62793/
-  * Usage:        see the script for details
+  * Installation: see https://www.biostars.org/p/62793/ for dettails;
+  * Usage:        see `merge_maf_files.sh` for details how to merge MAF files, the output file is required in `run_music.pl` ; for running MuSiC, see `run_music.pl` for details
 
 2. oncodriveCLUST
   * Version:      version 1.0.0
