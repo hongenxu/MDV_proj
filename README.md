@@ -46,6 +46,6 @@ We used SomaticSeq to identify somatic SNVs and Indels because SomaticSeq placed
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/driver_genes)
 
 ## Identify mutation signatures
-* *[*Details](https://github.com/hongenxu/MDV_proj/tree/master/mutation_signature)
+* [Details](https://github.com/hongenxu/MDV_proj/tree/master/mutation_signature)
 
 
