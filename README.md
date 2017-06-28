@@ -26,6 +26,9 @@ We followed the guidance at http://www.ensembl.org/info/docs/tools/vep/script/ve
 Scripts were uesd to process original FASTQ files to final BAM files. The pipeline was designed following GATK best practice.
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/fastq2bam)
 
+## Some statistics of BAM files
+* [Details](https://github.com/hongenxu/MDV_proj/tree/master/statistics)
+
 ## Identify somatic SNVs and Indels
 We used SomaticSeq to identify somatic SNVs and Indels because SomaticSeq placed #1 and #2 in INDEL and SNV in the Stage 5 of the ICGC-TCGA DREAM Somatic Mutation Calling Challenge.
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/somatic_snv_indel)
