@@ -9,6 +9,6 @@
                 ```source("https://bioconductor.org/biocLite.R") 
                 biocLite("SomaticSignatures")
                 ```
-* Notes: see  ./prepare4somaticsignatures.pl for preparing data for `SomaticSignatures`, see `somaticsignatures.R` for details for running SomaticSignatures
+* Notes: see  `prepare4somaticsignatures.pl` for preparing data for `SomaticSignatures`, see `somaticsignatures.R` for details for running `SomaticSignatures`
 
 
