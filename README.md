@@ -39,13 +39,14 @@ We used SomaticSeq to identify somatic SNVs and Indels because SomaticSeq placed
 ## Identify somatic SVs
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/somatic_sv)
 
-## Identify somatic SNVs and Indels from RNAseq data
-* [Details](https://github.com/hongenxu/MDV_proj/tree/master/RNAseq)
 
 ## Identify significantly mutated genes/regions
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/driver_genes)
 
 ## Identify mutation signatures
 * [Details](https://github.com/hongenxu/MDV_proj/tree/master/mutation_signature)
+
+## Identify somatic SNVs and Indels from RNAseq data
+* [Details](https://github.com/hongenxu/MDV_proj/tree/master/RNAseq)
 
 
