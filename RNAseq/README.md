@@ -1,15 +1,31 @@
 
-## Calling SNVs and Indels from RNAseq data
-This pipeline was used to call SNVs and Indels from RNAseq data, and it's not simply follow GATK best practics
+# Calling SNVs and Indels from RNAseq data
+This pipeline was used to align reads to transcriptome as well as  call SNVs and Indels, and it's not simply follow GATK best practics
 and also considered RECOMMENDATIONS in STAR manual.
 
-###SNVs
-1. MuSE
-  * Version:   MuSEv1.0rc_c039ffa
-  * From:      http://bioinformatics.mdanderson.org/main/MuSE#Download
-  * Usage:
-  ```
-     MuSE call –O Output.Prefix –f Reference.Genome Tumor.bam Matched.Normal.bam 
-     MuSE sump -I Output.Prefix.MuSE.txt -G –O Output.Prefix.vcf –D dbsnp.vcf.gz
- ```
-  * Filtering: No
+## Mapping reads to transcriptome and genome
+
+### Software versions
+* Trimmomatic-0.35, http://www.usadellab.org/cms/?page=trimmomatic
+* FastQC v0.11.4, http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+* STAR 2.5.1b, https://github.com/alexdobin/STAR/releases
+* Picard-tools-1.141, http://broadinstitute.github.io/picard/
+* GATK-3.6, https://www.broadinstitute.org/gatk/download/
+* SortMeRNA v2.1, http://bioinfo.lifl.fr/RNA/sortmerna/
+### Explanations
+
+* config.txt 
+
+required for running `rnaseq.pl`
+
+* `rnaseq.pl`
+
+main script 
+
+* `submit.pl`
+
+running `rnaseq.pl` and submit the job to computer cluster
+
+
+
+
