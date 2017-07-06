@@ -24,6 +24,9 @@ use warnings;
 use Getopt::Long;
 use List::MoreUtils qw(uniq);
 
+#please note that final bam and bai files are saved to
+#/mnt/research/ADOL/OutsideCollaborations/20160201_Cheng_Steep_Xu_Zhang/RNA_seq/bam
+
 
 ####software configuration
 my $input_dir="/mnt/research/ADOL/OutsideCollaborations/20160201_Cheng_Steep_Xu_Zhang/RNA_seq/data/reads/";

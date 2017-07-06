@@ -26,6 +26,6 @@ main script
 
 running `rnaseq.pl` and submit the job to computer cluster
 
+### Notes:
 
-
-
+Two samples 017824 and 017748 failed in the GATK "SplitNCigarReads" with error message "Badly formed genome location: Parameters to GenomeLocParser are incorrect". This bug will only be fixed in GATK4.
