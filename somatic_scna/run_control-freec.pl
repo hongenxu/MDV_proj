@@ -47,7 +47,7 @@ foreach my $num (0..25){
     my $cmd5="";
     my $cmd6="";
     $cmd5="zcat $tumor_pileup |sed  '/chrY/d' |gzip >/scratch/xu/MDV_project/$sample.tumor.pileup.gz " if $gender eq "XX";
-    $cmd6="zcat $tumor_pileup |sed  '/chrY/d' |gzip >/scratch/xu/MDV_project/$sample.normal.pileup.gz" if $gender eq "XX";
+    $cmd6="zcat $normal_pileup |sed  '/chrY/d' |gzip >/scratch/xu/MDV_project/$sample.normal.pileup.gz" if $gender eq "XX";
 
     #create config file
     my $config="~/$sample.config";
