@@ -11,7 +11,7 @@
 #working directory
 cd "/home/proj/MDW_genomics/xu/scna/freec"
 
-[ -d ./chromsomes ]  || mkdir ./chromosomes/ #create a directory
+[ -d ./chromosomes ]  || mkdir ./chromosomes/ #create a directory
 
 
 #faSplit was downloaded from UCSC kentutils
@@ -29,8 +29,9 @@ do
 
 done
 
-mv ./chromsomes/chrW.fa ./chromosomes/chrY.fa #rename file name
-mv ./chromsomes/chrZ.fa ./chromosomes/chrX.fa #rename file name
+mv ./chromosomes/chrW.fa ./chromosomes/chrY.fa #rename file name
+mv ./chromosomes/chrZ.fa ./chromosomes/chrX.fa #rename file name
+
 sed -i 's/chrZ/chrX/g' ./chromosomes/chrX.fa  #rename sequence name inside file
 sed -i 's/chrW/chrY/g' ./chromosomes/chrY.fa  #rename sequence name inside file
 
