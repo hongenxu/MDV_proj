@@ -1,11 +1,11 @@
-#!//usr/bin/perl
+#!/usr/bin/perl
 #summarize results from delly
 
 use strict;
 use warnings;
 
 my $wd="/home/proj/MDW_genomics/xu/SVs/delly_results/";
-chdir;
+chdir $wd;
 
 
 my @types=("DUP","DEL","INV","TRA");
